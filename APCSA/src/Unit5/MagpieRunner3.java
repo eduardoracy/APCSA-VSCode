@@ -1,4 +1,5 @@
 package Unit5;
+
 import java.util.Scanner;
 
 
@@ -16,7 +17,7 @@ public class MagpieRunner3 {
 	public static void main(String[] args)
 	{
 		Magpie3 maggie = new Magpie3();
-		UT.clearScreen(20);
+		UT.sUT.clearScreen(20);
 		System.out.println (maggie.getGreeting());
 		Scanner in = new Scanner (System.in);
 		String statement = in.nextLine();

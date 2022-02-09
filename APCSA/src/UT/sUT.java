@@ -1,7 +1,7 @@
-package Unit5;
+package UT;
 
 
-public class UT {
+public class sUT {
     public static void clearScreen(int spaces) {
         for (int i = 0; i < spaces; i++) {
             System.out.println();
