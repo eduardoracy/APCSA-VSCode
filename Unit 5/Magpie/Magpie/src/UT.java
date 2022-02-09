@@ -2,12 +2,12 @@
 
 
 public class UT {
-    public void clearScreen(int spaces) {
+    public static void clearScreen(int spaces) {
         for (int i = 0; i < spaces; i++) {
             System.out.println();
         }
     }
-    public void textCenter(String text, char symbol, int length) {
+    public static void textCenter(String text, char symbol, int length) {
         StringBuffer spacer = new StringBuffer();
         int numberChar = length - text.length();
         int leftLength = numberChar / 2;

@@ -14,17 +14,17 @@ public class MagpieRunner3 {
 	public static void main(String[] args)
 	{
 		Magpie3 maggie = new Magpie3();
-		// clearScreen(20);
+		
 		System.out.println (maggie.getGreeting());
-		Scanner in = new Scanner (System.in);
-		String statement = in.nextLine();
+		Scanner console = new Scanner (System.in);
+		String statement = console.nextLine();
 		
 		while (!statement.equals("Bye"))
 		{
 			System.out.println (maggie.getResponse(statement));
-			statement = in.nextLine();
+			statement = console.nextLine();
 		}
-		in.close();
+		console.close();
 	}
 }
 
