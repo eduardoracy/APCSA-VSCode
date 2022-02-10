@@ -7,6 +7,11 @@ public class UT {
             System.out.println();
         }
     }
+    public static void clearScreen() {
+        for (int i = 0; i < 10; i++) {
+            System.out.println();
+        }
+    }
     public static void textCenter(String text, char symbol, int length) {
         StringBuffer spacer = new StringBuffer();
         int numberChar = length - text.length();

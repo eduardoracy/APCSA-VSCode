@@ -3,7 +3,7 @@ public class MethodPractice {
 
     public static void main(String[] args) {
         UT.clearScreen(20);
-        String sentence = "Siperbowl Sunday is coming.";
+        String sentence = "Superbowl Sunday is coming.";
         String w1 = sentence.substring(6);
         String w2 = sentence.substring(11, 14);
         int len = sentence.length();
