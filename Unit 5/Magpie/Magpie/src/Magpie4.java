@@ -55,36 +55,35 @@ public class Magpie4 {
                 || findKeyword(statement, "platypus") >= 0
                 || findKeyword(statement, "fish") >= 0) {
             response = "Tell me more about your pet.";
-        } else if (findKeyword(statement, "teacher") >= 0) {
+        } else if (findKeyword(statement, "teacher") >= 0
+                || findKeyword(statement, "Mrs. Saarenas") >= 0
+                || findKeyword(statement, "Mrs. Wagner") >= 0) {
             response = "Your teacher sounds awesome!! You are really lucky to be their student, maybe consider getting them a gift";
-        }
-
-        else {
+        } else {
             // Look for a two word (you <something> me)
             // pattern
             int psnYou = findKeyword(statement, "you", 0);
             int psnI = findKeyword(statement, "I", 0);
 
-
             if (psnYou >= 0
                     && findKeyword(statement, "me", psnYou) >= 0) {
                 response = transformYouMeStatement(statement);
             } else if (psnI >= 0
-            && findKeyword(statement, "I want to", psnI) >= 0) {
+                    && findKeyword(statement, "I want to", psnI) >= 0) {
                 return transformIWantToStatement(statement);
             } else if (psnI >= 0
-            && findKeyword(statement, "I want", psnI) >= 0) {
-                return transformIWantToStatement(statement);
+                    && findKeyword(statement, "I want", psnI) >= 0) {
+                return transformIWantStatement(statement);
             } else if (psnI >= 0
-            && findKeyword(statement, "you", psnI) >= 0) {
-                return transformIWantToStatement(statement);
-            } 
-            
+                    && findKeyword(statement, "you", psnI) >= 0) {
+                return transformIYouStatement(statement);
+            }
+
             else {
                 response = getRandomResponse();
-            } 
+            }
         }
-        
+
         return response;
     }
 
