@@ -6,6 +6,10 @@ public class Snack {
         this.name = name;
         this.calories = calories;
     }
+    public Snack() {
+        name = "Air";
+        calories = 0;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -29,10 +33,13 @@ public class Snack {
     public static void main(String[] args) {
         UT.clearScreen();
         Snack s1 = new Snack("Kit-Kat", 300);
+        Snack s2 = new Snack();
         s1.setName("Snickers");
         System.out.println(s1.getName());
         s1.setCalories(200);
         System.out.println(s1.getCalories());
         System.out.println(s1);
+        System.out.println();
+        System.out.println(s2);
     }
 }
