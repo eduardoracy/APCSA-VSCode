@@ -38,7 +38,7 @@ public class Snack {
     }
     //Method
     public boolean isSameName(Snack s2) {
-        return this.name.equals(s2.name);
+        return name.equals(s2.name);
     }
     /**
      * Method ot set value of calories
@@ -47,10 +47,14 @@ public class Snack {
      */
     //Method
     public boolean isSameCalories(Snack s2) {
-        return this.calories == s2.calories;
+        return calories == s2.calories;
     }
     //toString
     public String toString() {
+        //I experimented a little with a few formats to return
+
+        //return "The snack " + name + " has " + calories + ".";
+
         /* String result = "The snack " + name;
         result.concat(" has " + calories + ".");
         return result;
@@ -58,9 +62,7 @@ public class Snack {
 
         // return String.format("The snack %s has %s calories.", name, calories);
 
-        // MessageFormat.format("The snack {0} has {1} calories.", name, calories);
-
-        // return "The snack %s has %s calories".formatter
+        // return MessageFormat.format("The snack {0} has {1} calories.", name, calories);
 
         return new StringBuffer("The snack ").append(name).append(" has ").append(calories).toString();
     }
