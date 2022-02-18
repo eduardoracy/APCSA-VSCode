@@ -4,7 +4,6 @@
     Purpose: to represent a snack
 */
 
-
 public class Snack {
 
     private String name;
