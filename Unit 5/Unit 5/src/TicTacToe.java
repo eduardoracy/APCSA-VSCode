@@ -7,9 +7,49 @@ public class TicTacToe {
     Scanner console = new Scanner(System.in);
     String SS;
     String p1, p2;
+    boolean won = true;
+    
+    final int[][][] winPosibilities = {
+        {{ 0, 0 }, { 0, 1 }, { 0, 2 }},
+        {{ 1, 0 }, { 1, 1 }, { 1, 2 }},
+        {{ 2, 0 }, { 2, 1 }, { 2, 2 }},
+    
+        {{ 0, 0 }, { 1, 0 }, { 2, 0 }},
+        {{ 0, 1 }, { 1, 1 }, { 2, 1 }},
+        {{ 0, 2 }, { 1, 2 }, { 2, 2 }},
+    
+        {{ 0, 0 }, { 1, 1 }, { 2, 2 }},
+        {{ 2, 0 }, { 1, 1 }, { 0, 2 }}
+    };
 
     public static void main(String[] args) {
-        new TicTacToe().pBoard();
+        new TicTacToe().startScreen();
+    }
+
+    public void newGame() {
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[0].length; col++) {
+                board[row][col] =0;
+            }
+        }
+
+        while (!won) {
+
+        }
+    }
+
+    public void detection(int pNumber) {
+        for (int[][] posib : winPosibilities) {
+            if (board[(posib[0][0])][(posib[0][1])] == 0) {
+                continue;
+            } 
+
+            for (int[] coordinate : posib) {
+                if (board[coordinate[0]][coordinate[1]] != 0) {
+                    //CAN YOU EMAIL ME YOUR CODE
+                }
+            }
+        }
     }
 
     public void startScreen() {
@@ -29,7 +69,6 @@ public class TicTacToe {
 		UT.clearScreen();
 		if (SS.equals("1")) {
 			nameSelect();
-			firstPlayer();
 		} else if (SS.equals("2")) {
 			//instructions();
 			startScreen();
@@ -43,10 +82,6 @@ public class TicTacToe {
             startScreen();
         }
 	}
-
-    public void firstPlayer() {
-
-    }
 
     public void nameSelect() {
 		UT.textCenter(" New game ", '═', 25);
