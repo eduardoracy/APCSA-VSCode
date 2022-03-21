@@ -8,9 +8,7 @@ public class UT {
         }
     }
     public static void clearScreen() {
-        for (int i = 0; i < 15; i++) {
-            System.out.println();
-        }
+      clearScreen(15);
     }
     public static void textCenter(String text, char symbol, int length) {
         StringBuffer spacer = new StringBuffer();
