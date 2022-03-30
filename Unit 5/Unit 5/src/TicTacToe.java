@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class TicTacToe {
-    boolean startScreen, marked, outBounds, continuePlay;
+    boolean startScreen, marked, outBounds, continuePlay, won, winConditions;
     char[] board = new char[9];
     char marker;
     int turnCounter, cellLoc;
@@ -11,15 +11,17 @@ public class TicTacToe {
     int TCL = 75;
 
     final int[][][] winPosibilitiesCoordinates = {
-            { { 2, 3 }, { 4, 7 }, { 5, 9 } }, // 1: horizontal, vertical, 1-9 diagonal
-            { { 1, 3 }, { 5, 8 }, }, // 2: horizontal, vertical
-            { { 1, 2 }, { 6, 9 }, { 7, 5 } }, // 3: horizontal, vertical, 7-3 diagonal
-            { { 5, 6 }, { 1, 7 }, }, // 4: horizontal, vertical
-            { { 4, 6 }, { 2, 8 }, { 1, 9 }, { 7, 3 } }, // 5: horizontal, vertical, 1-9 diagonal, 7-3 diagonal
-            { { 4, 5 }, { 3, 9 } }, // 6: horizontal, vertical
-            { { 8, 9 }, { 1, 4 }, { 5, 3 } }, // 7: horizontal, vertical, 7-3 diagonal
-            { { 7, 9 }, { 2, 5 } }, // 8: horizontal, vertical
-            { { 7, 8 }, { 3, 6 }, { 1, 5 } } // 9: horizontal, vertical, 1-9 diagonal
+            // Every possible combination to win for each of the 9 cells, this is somewhat
+            // brute forcing kind of
+            { { 2, 3 }, { 4, 7 }, { 5, 9 } }, // 1: R1 horizontal, C1 vertical, 1-9 diagonal
+            { { 1, 3 }, { 5, 8 }, }, // 2: R1 horizontal, C2 vertical
+            { { 1, 2 }, { 6, 9 }, { 7, 5 } }, // 3: R1 horizontal, C3 vertical, 7-3 diagonal
+            { { 5, 6 }, { 1, 7 }, }, // 4: R2 horizontal, C1 vertical
+            { { 4, 6 }, { 2, 8 }, { 1, 9 }, { 7, 3 } }, // 5: R2 horizontal, R2 vertical, 1-9 diagonal, 7-3 diagonal
+            { { 4, 5 }, { 3, 9 } }, // 6: R2 horizontal, C3 vertical
+            { { 8, 9 }, { 1, 4 }, { 5, 3 } }, // 7: R3 horizontal, C1 vertical, 7-3 diagonal
+            { { 7, 9 }, { 2, 5 } }, // 8: R3 horizontal, C2 vertical
+            { { 7, 8 }, { 3, 6 }, { 1, 5 } } // 9: R3 horizontal, C3 vertical, 1-9 diagonal
     };
 
     public static void main(String[] args) {
@@ -29,10 +31,11 @@ public class TicTacToe {
     public void reset() {
         p1 = p2 = " ";
         for (int i = 0; i < board.length; i++) {
-            board[i] = ' ';
+            //board[i] = ' ';
+            board[i] = String.format("%d", (i + 1)).charAt(0);
         }
         turnCounter = cellLoc = 0;
-        marked = startScreen = outBounds = false;
+        winConditions = won = marked = startScreen = outBounds = false;
     }
 
     public void newGame() {
@@ -43,29 +46,31 @@ public class TicTacToe {
             turn();
             endScreen();
         }
+        System.out.println();
         UT.textCenter("Thank you for playing!!", ' ', TCL);
         console.close();
     }
 
     public void endScreen() {
+        UT.clearScreen();
         UT.textCenter(" Game Over ", '═', TCL);
         UT.textCenter(" Turn: " + turnCounter + " ", '─', TCL);
 
-        if (turnCounter <= 9) {
-            UT.textCenter("Game has ended in a tie", ' ', TCL);
-        } else {
+        if (won) {
             System.out.println();
             UT.textCenter(nameHeader + " is the winner!", ' ', TCL);
+        } else {
+            UT.textCenter("Game has ended in a tie", ' ', TCL);
         }
 
-        UT.textCenter("Would you like to play again?", ' ', TCL);
+        UT.textCenter("Would you like to return to start screen?", ' ', TCL);
         if (console.next().equalsIgnoreCase("no")) {
             continuePlay = false;
         }
     }
 
     public void turn() {
-        while (!detection() || turnCounter <= 9) {
+        do {
             UT.clearScreen();
             turnCounter++;
             if (turnCounter % 2 != 0) {
@@ -85,13 +90,17 @@ public class TicTacToe {
                 UT.clearScreen();
             }
 
-            marked = outBounds = false;
-
             pBoard();
             UT.textCenter("Press ENTER to continue...", ' ', TCL);
             UI = console.nextLine();
             UI = console.nextLine();
-        }
+
+            detection();
+            marked = outBounds = false;
+            if (won || !(turnCounter < 9)) {
+                winConditions = true;
+            }
+        } while (!winConditions);
     }
 
     public void turnHeader() {
@@ -102,9 +111,9 @@ public class TicTacToe {
 
     public void boardMarker() {
         try {
-            if (board[cellLoc] == ' ') {
+            //if (board[cellLoc] == ' ') {
+            if (board[cellLoc] != 'X' && board[cellLoc] != 'O') {
                 board[cellLoc] = marker;
-
                 marked = true;
             } else {
                 System.out.println("Location unavailable, please choose another cell to mark");
@@ -122,15 +131,13 @@ public class TicTacToe {
         }
     }
 
-    public boolean detection() {
+    public void detection() {
         for (int[] coordinate : winPosibilitiesCoordinates[cellLoc]) {
-            if (marker != board[(coordinate[0] - 1)] && marker != board[(coordinate[1] - 1)]) {
-                continue;
-            } else {
-                return true;
+            if ((marker == board[(coordinate[0] - 1)]) && (marker == board[(coordinate[1] - 1)])) {
+                won = true;
+                break;
             }
         }
-        return false;
     }
 
     public void startScreen() {
