@@ -9,19 +9,59 @@ public class TicTacToe {
     String UI;
     String p1, p2, nextP, nameHeader;
     int TCL = 75;
-
     final int[][][] winPosibilitiesCoordinates = {
-            // Every possible combination to win for each of the 9 cells, this is somewhat
-            // brute forcing kind of
-            { { 2, 3 }, { 4, 7 }, { 5, 9 } }, // 1: R1 horizontal, C1 vertical, 1-9 diagonal
-            { { 1, 3 }, { 5, 8 }, }, // 2: R1 horizontal, C2 vertical
-            { { 1, 2 }, { 6, 9 }, { 7, 5 } }, // 3: R1 horizontal, C3 vertical, 7-3 diagonal
-            { { 5, 6 }, { 1, 7 }, }, // 4: R2 horizontal, C1 vertical
-            { { 4, 6 }, { 2, 8 }, { 1, 9 }, { 7, 3 } }, // 5: R2 horizontal, R2 vertical, 1-9 diagonal, 7-3 diagonal
-            { { 4, 5 }, { 3, 9 } }, // 6: R2 horizontal, C3 vertical
-            { { 8, 9 }, { 1, 4 }, { 5, 3 } }, // 7: R3 horizontal, C1 vertical, 7-3 diagonal
-            { { 7, 9 }, { 2, 5 } }, // 8: R3 horizontal, C2 vertical
-            { { 7, 8 }, { 3, 6 }, { 1, 5 } } // 9: R3 horizontal, C3 vertical, 1-9 diagonal
+            // Every possible combination to win for each of the 9 cells
+
+            { //Cell 1
+                { 2, 3 }, //R1 horizontal
+                { 4, 7 }, //C1 vertical
+                { 5, 9 }  //1-9 diagonal
+            },
+
+            { //Cell 2
+                { 1, 3 }, //R1 horizontal
+                { 5, 8 }, //C2 vertical
+            }, 
+
+            { //Cell 3
+                { 1, 2 }, //R1 horizontal
+                { 6, 9 }, //C3 vertical
+                { 7, 5 }  //7-3 diagonal
+            }, 
+
+            { //Cell 4
+                { 5, 6 }, //R2 horizontal
+                { 1, 7 }, //C1 vertical
+            }, 
+
+            { //Cell 5
+                { 4, 6 }, //R2 horizontal
+                { 2, 8 }, //C2 vertical
+                { 1, 9 }, //1-9 diagonal
+                { 7, 3 }  //7-3 diagonal
+            }, 
+
+            { //Cell 6
+                { 4, 5 }, //R2 horizontal
+                { 3, 9 }  //C3 vertical
+            }, 
+
+            { //Cell 7
+                { 8, 9 }, //R3 horizontal
+                { 1, 4 }, //C1 vertical
+                { 5, 3 }  //7-3 diagonal
+            }, 
+
+            { //Cell 8
+                { 7, 9 }, //R3 horizontal
+                { 2, 5 }  //C2 vertical
+            }, 
+
+            { //Cell 9
+                { 7, 8 }, //R3 horizontal
+                { 3, 6 }, //C3 vertical
+                { 1, 5 }  //1-9 diagonal
+            } 
     };
 
     public static void main(String[] args) {
@@ -133,7 +173,9 @@ public class TicTacToe {
 
     public void detection() {
         for (int[] coordinate : winPosibilitiesCoordinates[cellLoc]) {
-            if ((marker == board[(coordinate[0] - 1)]) && (marker == board[(coordinate[1] - 1)])) {
+            if ((marker != board[(coordinate[0] - 1)]) && (marker != board[(coordinate[1] - 1)])) {
+                continue;
+            } else {
                 won = true;
                 break;
             }
@@ -143,7 +185,7 @@ public class TicTacToe {
     public void startScreen() {
         UT.clearScreen();
         if (!startScreen) {
-            UT.textCenter("Press ENTER to start...", ' ', TCL);// classic start screen
+            UT.textCenter("Press ENTER to start...", ' ', TCL);
             UI = console.nextLine();
 
             UT.clearScreen();
