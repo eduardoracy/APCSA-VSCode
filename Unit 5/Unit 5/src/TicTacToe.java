@@ -71,8 +71,8 @@ public class TicTacToe {
     public void reset() {
         p1 = p2 = " ";
         for (int i = 0; i < board.length; i++) {
-            //board[i] = ' ';
-            board[i] = String.format("%d", (i + 1)).charAt(0);
+            board[i] = ' ';
+            // board[i] = String.format("%d", (i + 1)).charAt(0);
         }
         turnCounter = cellLoc = 0;
         winConditions = won = marked = startScreen = outBounds = false;
@@ -151,8 +151,8 @@ public class TicTacToe {
 
     public void boardMarker() {
         try {
-            //if (board[cellLoc] == ' ') {
-            if (board[cellLoc] != 'X' && board[cellLoc] != 'O') {
+            if (board[cellLoc] == ' ') {
+            // if (board[cellLoc] != 'X' && board[cellLoc] != 'O') {
                 board[cellLoc] = marker;
                 marked = true;
             } else {
@@ -173,11 +173,11 @@ public class TicTacToe {
 
     public void detection() {
         for (int[] coordinate : winPosibilitiesCoordinates[cellLoc]) {
-            if ((marker != board[(coordinate[0] - 1)]) && (marker != board[(coordinate[1] - 1)])) {
-                continue;
-            } else {
+            if (marker == board[(coordinate[0] - 1)] && marker == board[(coordinate[1] - 1)]) {
                 won = true;
                 break;
+            } else {
+                continue;
             }
         }
     }
