@@ -67,7 +67,7 @@ public class Snack {
     }
 
     public static void main(String[] args) {
-        UT.clearScreen();
+        utilities.clearScreen();
         Snack s1 = new Snack("Kit-Kat", 300);
         Snack s2 = new Snack("Snickers", 200);
         s1.setName("Snickers");

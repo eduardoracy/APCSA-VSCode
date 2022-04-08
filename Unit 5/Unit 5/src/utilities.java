@@ -1,14 +1,14 @@
 
 
 
-public class UT {
+public class utilities {
     public static void clearScreen(int spaces) {
         for (int i = 0; i < spaces; i++) {
             System.out.println();
         }
     }
     public static void clearScreen() {
-      clearScreen(15);
+    clearScreen(15);
     }
     public static void textCenter(String text, char symbol, int length) {
         StringBuffer spacer = new StringBuffer();

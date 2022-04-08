@@ -1,6 +1,6 @@
 public class SeatingChart {
     public static void main(String[] args) {
-        UT.clearScreen();
+        utilities.clearScreen();
         String[][] chart = {{"Maverick", "Goose", "Charlie"},
                             {"Viper", "IceMan", "Hollywood"},
                             {"Annalise", "Wes", "Frank"}};

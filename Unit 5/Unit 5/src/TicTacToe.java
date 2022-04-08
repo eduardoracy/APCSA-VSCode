@@ -1,67 +1,62 @@
 import java.util.Scanner;
 
 public class TicTacToe {
-    boolean startScreen, marked, outBounds, continuePlay, won, winConditions;
     char[] board = new char[9];
-    char marker;
-    int turnCounter, cellLoc;
     Scanner console = new Scanner(System.in);
-    String UI;
-    String p1, p2, nextP, nameHeader;
-    int TCL = 75;
+
     final int[][][] winPosibilitiesCoordinates = {
             // Every possible combination to win for each of the 9 cells
 
-            { //Cell 1
-                { 2, 3 }, //R1 horizontal
-                { 4, 7 }, //C1 vertical
-                { 5, 9 }  //1-9 diagonal
+            { // Cell 1
+                    { 2, 3 }, // R1 horizontal
+                    { 4, 7 }, // C1 vertical
+                    { 5, 9 } // 1-9 diagonal
             },
 
-            { //Cell 2
-                { 1, 3 }, //R1 horizontal
-                { 5, 8 }, //C2 vertical
-            }, 
+            { // Cell 2
+                    { 1, 3 }, // R1 horizontal
+                    { 5, 8 }, // C2 vertical
+            },
 
-            { //Cell 3
-                { 1, 2 }, //R1 horizontal
-                { 6, 9 }, //C3 vertical
-                { 7, 5 }  //7-3 diagonal
-            }, 
+            { // Cell 3
+                    { 1, 2 }, // R1 horizontal
+                    { 6, 9 }, // C3 vertical
+                    { 7, 5 } // 7-3 diagonal
+            },
 
-            { //Cell 4
-                { 5, 6 }, //R2 horizontal
-                { 1, 7 }, //C1 vertical
-            }, 
+            { // Cell 4
+                    { 5, 6 }, // R2 horizontal
+                    { 1, 7 }, // C1 vertical
+            },
 
-            { //Cell 5
-                { 4, 6 }, //R2 horizontal
-                { 2, 8 }, //C2 vertical
-                { 1, 9 }, //1-9 diagonal
-                { 7, 3 }  //7-3 diagonal
-            }, 
+            { // Cell 5
+                    { 4, 6 }, // R2 horizontal
+                    { 2, 8 }, // C2 vertical
+                    { 1, 9 }, // 1-9 diagonal
+                    { 7, 3 } // 7-3 diagonal
+            },
 
-            { //Cell 6
-                { 4, 5 }, //R2 horizontal
-                { 3, 9 }  //C3 vertical
-            }, 
+            { // Cell 6
+                    { 4, 5 }, // R2 horizontal
+                    { 3, 9 } // C3 vertical
+            },
 
-            { //Cell 7
-                { 8, 9 }, //R3 horizontal
-                { 1, 4 }, //C1 vertical
-                { 5, 3 }  //7-3 diagonal
-            }, 
+            { // Cell 7
+                    { 8, 9 }, // R3 horizontal
+                    { 1, 4 }, // C1 vertical
+                    { 5, 3 } // 7-3 diagonal
+            },
 
-            { //Cell 8
-                { 7, 9 }, //R3 horizontal
-                { 2, 5 }  //C2 vertical
-            }, 
+            { // Cell 8
+                    { 7, 9 }, // R3 horizontal
+                    { 2, 5 } // C2 vertical
+            },
 
-            { //Cell 9
-                { 7, 8 }, //R3 horizontal
-                { 3, 6 }, //C3 vertical
-                { 1, 5 }  //1-9 diagonal
-            } 
+            { // Cell 9
+                    { 7, 8 }, // R3 horizontal
+                    { 3, 6 }, // C3 vertical
+                    { 1, 5 } // 1-9 diagonal
+            }
     };
 
     public static void main(String[] args) {
@@ -69,224 +64,253 @@ public class TicTacToe {
     }
 
     public void reset() {
-        p1 = p2 = " ";
         for (int i = 0; i < board.length; i++) {
-            board[i] = ' ';
-            // board[i] = String.format("%d", (i + 1)).charAt(0);
+            // board[i] = ' ';
+            board[i] = String.format("%d", (i + 1)).charAt(0);
         }
-        turnCounter = cellLoc = 0;
-        winConditions = won = marked = startScreen = outBounds = false;
     }
 
     public void newGame() {
-        continuePlay = true;
+        boolean continuePlay = true;
+
         while (continuePlay) {
             reset();
             startScreen();
-            turn();
-            endScreen();
+            int turnCounter = 1;
+            String p1 = nameSelect(1);
+            String p2 = nameSelect(2);
+            continuePlay = endScreen(gameLoop(turnCounter, p1, p2), p1, p2);
         }
         System.out.println();
-        UT.textCenter("Thank you for playing!!", ' ', TCL);
+        utilities.textCenter("Thank you for playing!!", ' ');
         console.close();
     }
 
-    public void endScreen() {
-        UT.clearScreen();
-        UT.textCenter(" Game Over ", '═', TCL);
-        UT.textCenter(" Turn: " + turnCounter + " ", '─', TCL);
-
-        if (won) {
-            System.out.println();
-            UT.textCenter(nameHeader + " is the winner!", ' ', TCL);
-        } else {
-            UT.textCenter("Game has ended in a tie", ' ', TCL);
+    public int gameLoop(int turnCounter, String p1, String p2) {
+        boolean won = gameLogic(turnCounter, p1, p2);
+        if (won || (turnCounter >= 9)) {
+            return turnCounter;
         }
-
-        UT.textCenter("Would you like to return to start screen?", ' ', TCL);
-        if (console.next().equalsIgnoreCase("no")) {
-            continuePlay = false;
-        }
+        return gameLoop((turnCounter + 1), p1, p2);
     }
 
-    public void turn() {
-        do {
-            UT.clearScreen();
-            turnCounter++;
-            if (turnCounter % 2 != 0) {
-                nameHeader = p1;
-                nextP = p2;
-                marker = 'X';
-            } else {
-                nameHeader = p2;
-                nextP = p1;
-                marker = 'O';
-            }
-            while (!marked) {
-                pBoard();
-                System.out.println("Enter what cell you would like to mark:");
-                cellLoc = (console.nextInt() - 1);
-                boardMarker();
-                UT.clearScreen();
-            }
+    public boolean gameLogic(int turnCounter, String p1, String p2) {
+        utilities.clearScreen();
+        int cellLocation = -1;
+        boolean marked = false;
+        while (!marked) {
+            pBoard(turnCounter, p1, p2);
+            System.out.println("Enter what cell you would like to mark:");
+            cellLocation = (console.nextInt() - 1);
+            marked = boardMarker(cellLocation, getMarker(turnCounter));
+            utilities.clearScreen();
+        }
 
-            pBoard();
-            UT.textCenter("Press ENTER to continue...", ' ', TCL);
-            UI = console.nextLine();
-            UI = console.nextLine();
-
-            detection();
-            marked = outBounds = false;
-            if (won || !(turnCounter < 9)) {
-                winConditions = true;
-            }
-        } while (!winConditions);
+        pBoard(turnCounter, p1, p2);
+        utilities.textCenter("Press ENTER to continue...", ' ');
+        console.nextLine();
+        console.nextLine();
+        boolean won = detection(cellLocation, getMarker(turnCounter));
+        return won;
     }
 
-    public void turnHeader() {
-        UT.textCenter(" " + nameHeader + " ", '═', TCL);
-        UT.textCenter(" Turn: " + turnCounter + " ", '─', TCL);
+    public void pTurnHeader(int turnCounter, String p1, String p2) {
+        utilities.textCenter(" " + nameHeader(turnCounter, p1, p2) + " ", '═');
+        utilities.textCenter(" Turn: " + turnCounter + " ", '─');
         System.out.println();
     }
 
-    public void boardMarker() {
+    public boolean boardMarker(int cellLoc, char marker) {
         try {
-            if (board[cellLoc] == ' ') {
-            // if (board[cellLoc] != 'X' && board[cellLoc] != 'O') {
+            // if (board[cellLoc] == ' ') {
+            if (board[cellLoc] != 'X' && board[cellLoc] != 'O') {
                 board[cellLoc] = marker;
-                marked = true;
+                return true;
             } else {
-                System.out.println("Location unavailable, please choose another cell to mark");
-                System.out.print("Press ENTER to continue");
-                UI = console.nextLine();
-                UI = console.nextLine();
-                outBounds = false;
+                utilities.textCenter("Location unavailable, please choose another cell to mark", ' ');
+                utilities.textCenter("Press ENTER to continue", ' ');
+                console.nextLine();
+                console.nextLine();
             }
         } catch (ArrayIndexOutOfBoundsException asdf) {
-            System.out.println("Location out of bounds, please choose another cell to mark");
-            System.out.print("Press ENTER to continue");
-            UI = console.nextLine();
-            UI = console.nextLine();
-            return;
+            utilities.textCenter("Location out of bounds, please choose another cell to mark", ' ');
+            utilities.textCenter("Press ENTER to continue", ' ');
+            console.nextLine();
+            console.nextLine();
+        }
+        return false;
+    }
+
+    public boolean detection(int cellLoc, char marker) {
+        boolean won = false;
+        if (marker != board[cellLoc]) {
+            return false;
+        }
+        for (int[] coordinate : winPosibilitiesCoordinates[cellLoc]) {
+
+            if (marker != board[(coordinate[0] - 1)] || marker != board[(coordinate[1] - 1)]) {
+                won = false;
+            } else {
+                won = true;
+                break;
+            }
+        }
+
+        if (won) {
+            return true;
+        } else {
+            return false;
         }
     }
 
-    public void detection() {
-        for (int[] coordinate : winPosibilitiesCoordinates[cellLoc]) {
-            if (marker == board[(coordinate[0] - 1)] && marker == board[(coordinate[1] - 1)]) {
-                won = true;
-                break;
-            } else {
-                continue;
-            }
+    public String nameHeader(int turnCounter, String p1, String p2) {
+        if (turnCounter % 2 != 0) {
+            return p1;
+        } else {
+            return p2;
         }
+    }
+
+    public char getMarker(int turnCounter) {
+        if (turnCounter % 2 != 0) {
+            return 'X';
+        } else {
+            return 'O';
+        }
+    }
+
+    public void enterToStart() {
+        utilities.clearScreen();
+        utilities.textCenter("Press ENTER to start...", ' ');
+        console.nextLine();
+
+        utilities.clearScreen();
     }
 
     public void startScreen() {
-        UT.clearScreen();
-        if (!startScreen) {
-            UT.textCenter("Press ENTER to start...", ' ', TCL);
-            UI = console.nextLine();
+        utilities.clearScreen();
 
-            UT.clearScreen();
-            startScreen = true;
-        }
-        UT.textCenter(" Welcome to Tic-Tac-Toe!! ", '═', TCL);
-        UT.textCenter(" Designed by Eduardo Racy ", '─', TCL);
+        utilities.textCenter(" Welcome to Tic-Tac-Toe!! ", '═');
+        utilities.textCenter(" Designed by Eduardo Racy ", '─');
+
         System.out.println("1. Start Game");
         System.out.println("2. Instructions");
-        UI = console.next();
-        UT.clearScreen();
-        if (UI.equals("1")) {
-            nameSelect();
-        } else if (UI.equals("2")) {
+        int input = console.nextInt();
+
+        utilities.clearScreen();
+        if (input == 1) {
+            return;
+        } else if (input == 2) {
             instructions();
             startScreen();
         } else {
-            UT.clearScreen();
-            UT.textCenter(" Welcome to Tic-Tac-Toe!! ", '═', TCL);
-            UT.textCenter(" Designed by Eduardo Racy ", '─', TCL);
+            utilities.clearScreen();
+            utilities.textCenter(" Welcome to Tic-Tac-Toe!! ", '═');
+            utilities.textCenter(" Designed by Eduardo Racy ", '─');
             System.out.println("Invalid Selection");
             System.out.println("Press ENTER to try again...");
-            UI = console.nextLine();
-            UI = console.nextLine();
+            console.nextLine();
+            console.nextLine();
             startScreen();
         }
     }
 
-    public void nameSelect() {
-        UT.textCenter(" New game ", '═', TCL);
-        UT.textCenter(" Name Selection ", '─', TCL);
+    public String nameSelect(int num) {
+        utilities.clearScreen();
+        utilities.textCenter(" New game ", '═');
+        utilities.textCenter(" Name Selection ", '─');
         System.out.println();
-        UT.textCenter("Please enter a name with 9 characters or leUI.", ' ', TCL);
-        System.out.println("\nPlayer 1 enter your name...");
-        UI = console.next();
-        p1 = UI.substring(0, 1).toUpperCase() + UI.substring(1).toLowerCase();
-        System.out.println("\nPlayer 2 enter your name...");
-        UI = console.next();
-        p2 = UI.substring(0, 1).toUpperCase() + UI.substring(1).toLowerCase();
-        System.out.println();
-        UT.textCenter("Press ENTER to continue...", ' ', TCL);
-        UI = console.nextLine();
-        UI = console.nextLine();
-        UT.clearScreen();
+        utilities.textCenter("Please enter a name with 9 characters or less.", ' ');
+        System.out.println(String.format("\nPlayer %s enter your name...", num));
+        String input = console.next();
+        return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
     }
 
     public void instructions() {
-        UT.textCenter(" New game ", '═', TCL);
-        UT.textCenter(" Instructions ", '─', TCL);
+        utilities.textCenter(" New game ", '═');
+        utilities.textCenter(" Instructions ", '─');
         System.out.println();
 
-        UT.textCenter("Each player will be assigned either an X or O.", ' ', TCL);
+        utilities.textCenter("Each player will be assigned either an X or O.", ' ');
         System.out.println();
 
-        UT.textCenter("The first player to get a 3 in a row wins,", ' ', TCL);
-        UT.textCenter("this can be achieved horizontally, vertically, or diagonally.", ' ', TCL);
+        utilities.textCenter("The first player to get a 3 in a row wins,", ' ');
+        utilities.textCenter("this can be achieved horizontally, vertically, or diagonally.", ' ');
         System.out.println();
 
-        UT.textCenter("If all 9 squares are marked, and neither player has won,", ' ', TCL);
-        UT.textCenter("the game ends in a tie.", ' ', TCL);
+        utilities.textCenter("If all 9 squares are marked, and neither player has won,", ' ');
+        utilities.textCenter("the game ends in a tie.", ' ');
         System.out.println();
 
-        UT.textCenter("Press ENTER to continue...", ' ', TCL);
-        UI = console.nextLine();
-        UI = console.nextLine();
+        utilities.textCenter("Press ENTER to continue...", ' ');
+        console.nextLine();
+        console.nextLine();
 
-        UT.clearScreen();
+        utilities.clearScreen();
 
-        UT.textCenter(" New game ", '═', TCL);
-        UT.textCenter(" Instructions ", '─', TCL);
+        utilities.textCenter(" New game ", '═');
+        utilities.textCenter(" Instructions ", '─');
         System.out.println();
 
-        UT.textCenter("In order to mark a cell please select a digit 1-9,", ' ', TCL);
-        UT.textCenter("corresponding to the chart below.", ' ', TCL);
+        utilities.textCenter("In order to mark a cell please select a digit 1-9,", ' ');
+        utilities.textCenter("corresponding to the chart below.", ' ');
         System.out.println();
 
         int boardRow = 1;
         for (int i = 1; i <= 5; i++) {
+            String line = "";
             for (int j = 0; j < 3; j++) {
-                if (i % 2 == 0) { // 2 Middle cross rows
-                    System.out.print("───");
+                if (i % 2 == 0) { // 2 Middle intersection rows
+                    line += "───";
                     if (j < 2) {
-                        System.out.print("┼");
+                        line += "┼";
                     }
                 } else { // Rows with user values
-                    System.out.print(String.format(" %s ", boardRow));
+                    line += String.format(" %s ", boardRow);
                     if (j < 2) {
-                        System.out.print("│");
+                        line += "│";
                     }
                     boardRow++;
                 }
             }
-            System.out.println();
+            utilities.textCenter(line, ' ');
         }
+        System.out.println();
 
-        UT.textCenter("Press ENTER to continue...", ' ', TCL);
-        UI = console.nextLine();
+        utilities.textCenter("Press ENTER to continue...", ' ');
+        console.nextLine();
     }
 
-    public void pBoard() {
-        turnHeader();
+    public boolean endScreen(int turnCounter, String p1, String p2) {
+        utilities.clearScreen();
+        utilities.textCenter(" Game Over ", '═');
+        utilities.textCenter(" Turn: " + turnCounter + " ", '─');
+        boolean won = false;
+
+        for (int i = 0; i < board.length; i++) {
+            won = detection(i, getMarker(turnCounter));
+            if (won) {
+                break;
+            }
+        }
+
+        if (won) {
+            System.out.println();
+            utilities.textCenter(nameHeader(turnCounter, p1, p2) + " is the winner!", ' ');
+        } else {
+            utilities.textCenter("Game has ended in a tie", ' ');
+        }
+
+        utilities.textCenter("Would you like to return to start screen?", ' ');
+        if (console.next().equalsIgnoreCase("no")) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void pBoard(int turnCounter, String p1, String p2) {
+        pTurnHeader(turnCounter, p1, p2);
         int boardRow = 0;
         for (int i = 1; i <= 5; i++) {
             for (int j = 0; j < 3; j++) {

@@ -1,7 +1,7 @@
 
 public class ArrayPlay {
     public static void main(String[] args) {
-        UT.clearScreen(20);
+        utilities.clearScreen(20);
         int[] scores = new int[8];
         for (int i = 0; i < scores.length; i++) {
             scores[i] = 0;
