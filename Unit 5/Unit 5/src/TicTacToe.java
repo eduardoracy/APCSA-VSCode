@@ -10,7 +10,7 @@ public class TicTacToe {
             { // Cell 1
                     { 2, 3 }, // R1 horizontal
                     { 4, 7 }, // C1 vertical
-                    { 5, 9 } // 1-9 diagonal
+                    { 5, 9 }  // 1-9 diagonal
             },
 
             { // Cell 2
@@ -21,7 +21,7 @@ public class TicTacToe {
             { // Cell 3
                     { 1, 2 }, // R1 horizontal
                     { 6, 9 }, // C3 vertical
-                    { 7, 5 } // 7-3 diagonal
+                    { 7, 5 }  // 7-3 diagonal
             },
 
             { // Cell 4
@@ -33,29 +33,29 @@ public class TicTacToe {
                     { 4, 6 }, // R2 horizontal
                     { 2, 8 }, // C2 vertical
                     { 1, 9 }, // 1-9 diagonal
-                    { 7, 3 } // 7-3 diagonal
+                    { 7, 3 }  // 7-3 diagonal
             },
 
             { // Cell 6
                     { 4, 5 }, // R2 horizontal
-                    { 3, 9 } // C3 vertical
+                    { 3, 9 }  // C3 vertical
             },
 
             { // Cell 7
                     { 8, 9 }, // R3 horizontal
                     { 1, 4 }, // C1 vertical
-                    { 5, 3 } // 7-3 diagonal
+                    { 5, 3 }  // 7-3 diagonal
             },
 
             { // Cell 8
                     { 7, 9 }, // R3 horizontal
-                    { 2, 5 } // C2 vertical
+                    { 2, 5 }  // C2 vertical
             },
 
             { // Cell 9
                     { 7, 8 }, // R3 horizontal
                     { 3, 6 }, // C3 vertical
-                    { 1, 5 } // 1-9 diagonal
+                    { 1, 5 }  // 1-9 diagonal
             }
     };
 
@@ -88,7 +88,7 @@ public class TicTacToe {
 
     public int gameLoop(int turnCounter, String playerName1, String playerName2) {
         boolean won = gameLogic(turnCounter, playerName1, playerName2);
-        if (won || (turnCounter >= 9)) { //checks if won or tie
+        if (won || (turnCounter >= 9)) {
             return turnCounter;
         }
         return gameLoop((turnCounter + 1), playerName1, playerName2);
