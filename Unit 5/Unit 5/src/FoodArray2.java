@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class FoodArray2 {
     public static void main(String[] args) {
-        utilities.clearScreen();
+        Utilities.clearScreen();
         Scanner console = new Scanner(System.in);
         System.out.println("How long is your list?");
         int arrLength = console.nextInt();
