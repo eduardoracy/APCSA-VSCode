@@ -1,20 +1,58 @@
+import java.util.Scanner;
+
 public class JeopardyQuestion {
     Scanner input = new Scanner(System.in);
     private String question;
     private String answer;
-    private String category;
-    private int difficultyLevel;
-    
-    public JeopardyQuestion(String question, String answer, String category, in difficultyLevel) {
-        this.question = quetsion;
+    private int value;
+    private boolean answered;
+    private int attempts;
+    private String answerFormat;
+
+    public JeopardyQuestion(String question, String answer, String answerFormat, int value, boolean answered) {
+        this.question = question;
         this.answer = answer;
-        this.category = category;
-        this.difficultyLevel = difficultyLevel;
+        this.value = value;
+        this.answered = answered;
+        this.answerFormat = answerFormat;
     }
 
-    public void askQuestion(Scanner input) {
-        System.out.println(question);
-        System.out.println("");
+    public int getValue() {
+        return value;
+    }
+
+    public boolean isAnswered() {
+        return answered;
+    }
+
+    public void askQuestion(JeopardyPlayer originalReponder, JeopardyPlayer stolenResponder, Scanner console) {
+        JeopardyPlayer player = originalReponder;
+        while (!answered || attempts <= 2) {
+            attempts++;
+            Utilities.clearScreen();
+            Utilities.printTurnHeader(player.getName(), "Points:", player.getPoints());
+            System.out.println(String.format("\n%s?", question));
+            System.out.println(String.format("%s ", answerFormat));
+            if (console.next().equalsIgnoreCase(answer)) {
+                player.addPoints(value);
+                answered = true;
+            } else {
+                player.addPoints(value * (-1));
+                Utilities.textCenter("Incorrect Response!!", ' ');
+                Utilities.textCenter(String.format("%s now has %s points", player.getName(), player.getPoints()), ' ');
+                System.out.println();
+                if (attempts == 1) { 
+                    player = stolenResponder;
+                    Utilities.textCenter(String.format("%s would you like to steal?", player.getName()), ' ');
+                    if (console.next().equalsIgnoreCase("no")) {
+                        answered = true;
+                    }
+                }
+            }
+        }
+        Utilities.textCenter("Press ENTER to continue", ' ');
+        console.nextLine();
+        console.nextLine();
     }
 
 }
