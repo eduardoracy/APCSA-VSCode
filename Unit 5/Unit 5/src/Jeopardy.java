@@ -19,8 +19,7 @@ public class Jeopardy {
     }
 
     public void gameLogic(JeopardyBoard board, JeopardyPlayer nextQuestionPlayer, JeopardyPlayer currentPlayer, JeopardyPlayer otherPlayer) {
-        boolean allQuestionsAnswered = board.allQuestionsAnswered();
-        if(!allQuestionsAnswered) {
+        if(!board.allQuestionsAnswered()) {
             if (nextQuestionPlayer.equals(otherPlayer)) {
                 nextQuestionPlayer = otherPlayer;
                 otherPlayer = currentPlayer;
@@ -39,6 +38,10 @@ public class Jeopardy {
             }
         }
         return currentPlayer;
+    }
+
+    public void finalJeopardy(JeopardyPlayer currentPlayer, JeopardyPlayer othePlayer) {
+        
     }
 
 }
