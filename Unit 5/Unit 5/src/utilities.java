@@ -29,7 +29,26 @@ public class Utilities {
     }
 
     public static void textCenter(String text, char symbol) {
-        textCenter(text, symbol, 75);
+        textCenter(text, symbol, 100);
+    }
+
+    public static String stringCenter(String text, char symbol, int length) {
+        StringBuffer spacer = new StringBuffer();
+        int numberChar = length - text.length();
+        int leftLength = numberChar / 2;
+        int rightLength = numberChar - leftLength;
+
+        for (int i = 0; i < leftLength; i++) {
+            spacer.append(symbol);
+        }
+        spacer.append(text);
+        for (int i = 0; i < rightLength; i++) {
+            spacer.append(symbol);
+        }
+        return spacer.toString();
+    }
+    public static String stringCenter(String text, char symbol) {
+        return stringCenter(text, symbol, 100);
     }
 
     public static void printTurnHeader(String name, String secondLineTitle, int secondLineNumber) {
@@ -97,5 +116,10 @@ public class Utilities {
         textCenter("Press ENTER to continue...", ' ');
         console.nextLine();
     }
-
+    
+    public static void enterToContinue(Scanner console) {
+        textCenter("Press ENTER to continue", ' ');
+        console.nextLine();
+        console.nextLine();
+    }
 }

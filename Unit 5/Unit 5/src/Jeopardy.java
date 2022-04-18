@@ -10,37 +10,31 @@ public class Jeopardy {
     }
 
     public void startGame() {
-        Utilities.startScreen("Jeopardy", instructions, console);
-        JeopardyPlayer player1 = new JeopardyPlayer(Utilities.nameSelect(1, console), 0, 1);
-        JeopardyPlayer player2 = new JeopardyPlayer(Utilities.nameSelect(2, console), 0, 2);
+        Utilities.startScreen("Java Jeopardy", instructions, console);
         JeopardyBoard board = JeopardyBoard.createBoard();
-        gameLogic(board, player1, player1, player2);
-
+        gameLogic(board, board.getCurrentPlayer());
     }
 
-    public void gameLogic(JeopardyBoard board, JeopardyPlayer nextQuestionPlayer, JeopardyPlayer currentPlayer, JeopardyPlayer otherPlayer) {
+    public void gameLogic(JeopardyBoard board, JeopardyPlayer player) {
+        board.setCurrentPlayer(board.getCurrentPlayer());
         if(!board.allQuestionsAnswered()) {
-            if (nextQuestionPlayer.equals(otherPlayer)) {
-                nextQuestionPlayer = otherPlayer;
-                otherPlayer = currentPlayer;
-            }
-            gameLogic(board, questionSelection(board, currentPlayer, otherPlayer), currentPlayer, otherPlayer);
+            gameLogic(board, questionSelection(board));
         } else {
-            //Final Jeopardy
+            finalJeopardy(board);
         }
     }
 
-    public JeopardyPlayer questionSelection(JeopardyBoard board, JeopardyPlayer currentPlayer, JeopardyPlayer otherPlayer) {
+    public JeopardyPlayer questionSelection(JeopardyBoard board) {
         String input = console.next();
         for (JeopardyBoardCategory category : board.getCategories()) {
             if (input.equals(category.getCategory())) {
-                category.categoryQuestion(console.nextInt()).askQuestion(currentPlayer, otherPlayer, console);
+                category.categoryQuestion(console.nextInt()).askQuestion(board, console);
             }
         }
-        return currentPlayer;
+        return board.getCurrentPlayer();
     }
 
-    public void finalJeopardy(JeopardyPlayer currentPlayer, JeopardyPlayer othePlayer) {
+    public void finalJeopardy(JeopardyBoard board) {
         
     }
 

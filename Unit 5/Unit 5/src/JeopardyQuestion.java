@@ -25,8 +25,8 @@ public class JeopardyQuestion {
         return answered;
     }
 
-    public JeopardyPlayer askQuestion(JeopardyPlayer originalReponder, JeopardyPlayer stolenResponder, Scanner console) {
-        JeopardyPlayer player = originalReponder;
+    public void askQuestion(JeopardyBoard board, Scanner console) {
+        JeopardyPlayer player = board.getCurrentPlayer();
         while (!answered || attempts <= 2) {
             attempts++;
             Utilities.clearScreen();
@@ -42,19 +42,17 @@ public class JeopardyQuestion {
                 Utilities.textCenter(String.format("%s now has %s points", player.getName(), player.getPoints()), ' ');
                 System.out.println();
                 if (attempts == 1) { 
-                    player = stolenResponder;
+                    board.setCurrentPlayer(player);
+                    player = board.getCurrentPlayer();
                     Utilities.textCenter(String.format("%s would you like to steal?", player.getName()), ' ');
                     if (console.next().equalsIgnoreCase("no")) {
                         answered = true;
                     }
                 } else {
-                    player = originalReponder;
+                    board.setCurrentPlayer(player);
                 }
             }
         }
-        Utilities.textCenter("Press ENTER to continue", ' ');
-        console.nextLine();
-        console.nextLine();
-        return player;
+        Utilities.enterToContinue(console);
     }
 }
