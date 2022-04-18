@@ -25,7 +25,7 @@ public class JeopardyQuestion {
         return answered;
     }
 
-    public void askQuestion(JeopardyPlayer originalReponder, JeopardyPlayer stolenResponder, Scanner console) {
+    public JeopardyPlayer askQuestion(JeopardyPlayer originalReponder, JeopardyPlayer stolenResponder, Scanner console) {
         JeopardyPlayer player = originalReponder;
         while (!answered || attempts <= 2) {
             attempts++;
@@ -47,12 +47,14 @@ public class JeopardyQuestion {
                     if (console.next().equalsIgnoreCase("no")) {
                         answered = true;
                     }
+                } else {
+                    player = originalReponder;
                 }
             }
         }
         Utilities.textCenter("Press ENTER to continue", ' ');
         console.nextLine();
         console.nextLine();
+        return player;
     }
-
 }

@@ -14,7 +14,31 @@ public class Jeopardy {
         JeopardyPlayer player1 = new JeopardyPlayer(Utilities.nameSelect(1, console), 0, 1);
         JeopardyPlayer player2 = new JeopardyPlayer(Utilities.nameSelect(2, console), 0, 2);
         JeopardyBoard board = JeopardyBoard.createBoard();
+        gameLogic(board, player1, player1, player2);
 
     }
-    
+
+    public void gameLogic(JeopardyBoard board, JeopardyPlayer nextQuestionPlayer, JeopardyPlayer currentPlayer, JeopardyPlayer otherPlayer) {
+        boolean allQuestionsAnswered = board.allQuestionsAnswered();
+        if(!allQuestionsAnswered) {
+            if (nextQuestionPlayer.equals(otherPlayer)) {
+                nextQuestionPlayer = otherPlayer;
+                otherPlayer = currentPlayer;
+            }
+            gameLogic(board, questionSelection(board, currentPlayer, otherPlayer), currentPlayer, otherPlayer);
+        } else {
+            //Final Jeopardy
+        }
+    }
+
+    public JeopardyPlayer questionSelection(JeopardyBoard board, JeopardyPlayer currentPlayer, JeopardyPlayer otherPlayer) {
+        String input = console.next();
+        for (JeopardyBoardCategory category : board.getCategories()) {
+            if (input.equals(category.getCategory())) {
+                category.categoryQuestion(console.nextInt()).askQuestion(currentPlayer, otherPlayer, console);
+            }
+        }
+        return currentPlayer;
+    }
+
 }

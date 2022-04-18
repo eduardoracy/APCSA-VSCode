@@ -32,13 +32,13 @@ public class Utilities {
         textCenter(text, symbol, 75);
     }
 
-    public void printTurnHeader(String name, String secondLineTitle, int secondLineNumber) {
+    public static void printTurnHeader(String name, String secondLineTitle, int secondLineNumber) {
         Utilities.textCenter(String.format(" %s ", name), '═');
         Utilities.textCenter(String.format(" %s %s ", secondLineTitle, secondLineNumber), '─');
         System.out.println();
     }
 
-    public String nameSelect(int playerNumber, Scanner console) {
+    public static String nameSelect(int playerNumber, Scanner console) {
         Utilities.clearScreen();
         Utilities.textCenter(" New game ", '═');
         Utilities.textCenter(" Name Selection ", '─');
@@ -51,7 +51,7 @@ public class Utilities {
         return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
     }
 
-    public void startScreen(String gameName, String[] instructions, Scanner console) {
+    public static void startScreen(String gameName, String[] instructions, Scanner console) {
         Utilities.clearScreen();
 
         Utilities.textCenter(String.format(" Welcome to %s!! ", gameName), '═');
@@ -81,7 +81,7 @@ public class Utilities {
         }
     }
 
-    public void instructions(String[] instructions, Scanner console) {
+    public static void instructions(String[] instructions, Scanner console) {
         Utilities.textCenter(" New game ", '═');
         Utilities.textCenter(" Instructions ", '─');
         System.out.println();
