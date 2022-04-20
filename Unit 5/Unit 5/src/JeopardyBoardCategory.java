@@ -1,15 +1,17 @@
+import java.util.ArrayList;
+
 public class JeopardyBoardCategory {
-    private JeopardyQuestion[] questions = new JeopardyQuestion[5];
+    private ArrayList<JeopardyQuestion> questions = new ArrayList<JeopardyQuestion>(5);
     private String category;
 
     public JeopardyBoardCategory(String category, JeopardyQuestion twoHundred, JeopardyQuestion fourHundred,
             JeopardyQuestion sixHundred, JeopardyQuestion eightHundred, JeopardyQuestion oneThousand) {
         this.category = category;
-        questions[0] = twoHundred;
-        questions[1] = fourHundred;
-        questions[2] = sixHundred;
-        questions[3] = eightHundred;
-        questions[4] = oneThousand;
+        questions.set(0, twoHundred);
+        questions.set(1, fourHundred);
+        questions.set(2, sixHundred);
+        questions.set(3, eightHundred);
+        questions.set(4, oneThousand);
     }
 
     public boolean allCategoryQuestionsAnswered() {
@@ -22,7 +24,7 @@ public class JeopardyBoardCategory {
     }
 
     public JeopardyQuestion categoryQuestion(int value) {
-        return questions[(value/200) - 1];
+        return questions.get((value/200) - 1);
     }
 
     public String getCategory() {

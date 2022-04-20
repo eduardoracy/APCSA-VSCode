@@ -1,8 +1,10 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class JeopardyBoard {
         private static Scanner console = new Scanner(System.in);
-        private JeopardyBoardCategory[] categories = new JeopardyBoardCategory[6];
+        // private JeopardyBoardCategory[] categories = new JeopardyBoardCategory[6];
+        private ArrayList<JeopardyBoardCategory> categories = new ArrayList<JeopardyBoardCategory>(5);
         private JeopardyPlayer currentPlayer, player1, player2;
 
         public JeopardyBoard(JeopardyPlayer player1, JeopardyPlayer player2, JeopardyBoardCategory category1,
@@ -10,12 +12,12 @@ public class JeopardyBoard {
                         JeopardyBoardCategory category3,
                         JeopardyBoardCategory category4, JeopardyBoardCategory category5,
                         JeopardyBoardCategory category6) {
-                categories[0] = category1;
-                categories[1] = category2;
-                categories[2] = category3;
-                categories[3] = category4;
-                categories[4] = category5;
-                categories[5] = category6;
+                categories.set(0, category1);
+                categories.set(1, category2);
+                categories.set(2, category3);
+                categories.set(3, category4);
+                categories.set(4, category5);
+                categories.set(5, category6);
                 this.player1 = player1;
                 this.player2 = player2;
         }
@@ -29,7 +31,7 @@ public class JeopardyBoard {
                 return true;
         }
 
-        public JeopardyBoardCategory[] getCategories() {
+        public ArrayList<JeopardyBoardCategory> getCategories() {
                 return categories;
         }
 
@@ -48,7 +50,7 @@ public class JeopardyBoard {
         }
 
         public void printBoard() {
-                for (int i = 0; i < categories.length; i++) {
+                for (int i = 0; i < categories.size(); i++) {
                         if (i == 0) {
                                 System.out.print("╔");
                         } else {
@@ -61,9 +63,11 @@ public class JeopardyBoard {
                 System.out.println("╗");
 
                 for (int i = 0; i < 3; i++) {
-                        for (int j = 0; j < categories.length; j++) {
+                        String category = categories.get(i).getCategory();
+                        for (int j = 0; j < categories.size(); j++) {
                                 System.out.print("║");
-                                printBoardCellSpacing(separateWords(categories[i].getCategory(), i));
+                                printBoardCellSpacing(wordsPerRow(category,
+                                                detectNumberOfWords(category, 0, 0)));
                         }
                         System.out.println("║");
                 }
@@ -95,10 +99,7 @@ public class JeopardyBoard {
                                 return seperateWords(category)[1];
                         }
                 } else if (numberOfWords == 3) {
-                        for (int i = 0; i < numberOfWords; i++) {
-                                if
-                                return seperateWords(category)[i];
-                        }
+                                return seperateWords(category)[row];
                 }
         
                 return " ";
@@ -107,7 +108,6 @@ public class JeopardyBoard {
         public String[] seperateWords(String category) {
                 return category.split(" ");
         }
-
 
         public static JeopardyBoard createBoard() {
                 return new JeopardyBoard(
