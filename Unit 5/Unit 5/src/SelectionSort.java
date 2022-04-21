@@ -1,7 +1,7 @@
 public class SelectionSort {
 
     public static void main(String[] args) {
-        int[] num = {12,56,1,4,835,3,78};
+        int[] num = {12,56,1,4,3,78,835};
 
         selectionSort(num);
 
@@ -15,12 +15,11 @@ public class SelectionSort {
     }
 
     public static void selectionSort(int[] arr, int index) {
-        int arrLength = arr.length - 1;
-        if (index == arrLength) {
+        if (index == arr.length) {
             return;
         }
         int min = index;
-        for (int i = min + 1; i < arrLength; i++) {
+        for (int i = min + 1; i < arr.length; i++) {
             if (arr[i] < arr[min]) {
                 min = i;
             }
@@ -34,4 +33,15 @@ public class SelectionSort {
             selectionSort(arr, index);
         }
     }
+    public static void insertionSort(int[] arr) {
+        for (int i = 1; i < arr.length; i++) {
+            int key = arr[i];
+            int pos = i;
+            while(pos >0 && arr[pos - 1] > key) {
+                arr[pos] = arr[pos - 1];
+                pos--;
+            }
+            arr[pos] = key;
+        }
+}
 }
