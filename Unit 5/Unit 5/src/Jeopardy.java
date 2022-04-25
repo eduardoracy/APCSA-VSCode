@@ -72,6 +72,36 @@ public class Jeopardy {
         Utilities.enterToContinue(console);
         questionSelection(category);
     }
+		public boolean endScreen() {
+        Utilities.clearScreen();
+        Utilities.textCenter(" Java Jeopardy ", '═');
+        Utilities.textCenter(" Game Over ", '─');
+			
+				String winner = "";
+				JeopardyPlayer player1 = board.getPlayer(1);
+				JeopardyPlayer player2 = board.getPlayer(2);
+				if (player1.getPoints() > player2.getPoints()) {
+					winner = player1.getName();
+				} else if (player1.getPoints() < player2.getPoints()) {
+					winner = player2.getName();
+				} else {
+					
+				}
+
+				System.out.println();
+        if (!winner.equals("")) {
+            Utilities.textCenter("Game has ended in a tie", ' ');
+        } else {
+            Utilities.textCenter(winner + " is the winner!", ' ');
+        }
+
+        Utilities.textCenter("Would you like to return to start screen?", ' ');
+        if (console.next().equalsIgnoreCase("no")) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     public void finalJeopardy() {
         boolean player1 = finalJeopardyPlayerTurn();

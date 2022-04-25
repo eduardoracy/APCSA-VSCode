@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class JeopardyQuestion {
+class JeopardyQuestion {
     Scanner input = new Scanner(System.in);
     private String question;
     private String answer;
@@ -34,10 +34,12 @@ public class JeopardyQuestion {
         while (!answered || attempts <= 2) {
             attempts++;
             Utilities.clearScreen();
+						
             Utilities.printTurnHeader(player.getName(), "Points:", player.getPoints());
             System.out.println(String.format("%s for %s", category.getCategory(), value));
             System.out.println(String.format("\n%s?", question));
             System.out.println(String.format("%s ", answerFormat));
+					
             if (console.next().equalsIgnoreCase(answer)) {
                 player.incrementPoints(value);
                 answered = true;
