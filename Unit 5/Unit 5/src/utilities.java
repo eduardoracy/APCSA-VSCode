@@ -12,7 +12,7 @@ public class Utilities {
         clearScreen(15);
     }
 
-    public static void textCenter(String text, char symbol, int length) {
+    public static void sameLineTextCenter(String text, char symbol, int length) {
         StringBuffer spacer = new StringBuffer();
         int numberChar = length - text.length();
         int leftLength = numberChar / 2;
@@ -25,7 +25,16 @@ public class Utilities {
         for (int i = 0; i < rightLength; i++) {
             spacer.append(symbol);
         }
-        System.out.println(spacer.toString());
+        System.out.print(spacer.toString());
+    }
+
+    public static void sameLineTextCenter(String text, char symbol) {
+        sameLineTextCenter(text, symbol, 100);
+    }
+
+    public static void textCenter(String text, char symbol, int length) {
+        sameLineTextCenter(text, symbol, length);
+        System.out.println();
     }
 
     public static void textCenter(String text, char symbol) {
@@ -47,6 +56,7 @@ public class Utilities {
         }
         return spacer.toString();
     }
+
     public static String stringCenter(String text, char symbol) {
         return stringCenter(text, symbol, 100);
     }
@@ -57,15 +67,24 @@ public class Utilities {
         System.out.println();
     }
 
+    public static void printTurnHeader(String name, String secondLineTitle) {
+        Utilities.textCenter(String.format(" %s ", name), '═');
+        Utilities.textCenter(String.format(" %s ", secondLineTitle), '─');
+        System.out.println();
+    }
+
     public static String nameSelect(int playerNumber, Scanner console) {
         Utilities.clearScreen();
         Utilities.textCenter(" New game ", '═');
         Utilities.textCenter(" Name Selection ", '─');
         System.out.println();
 
-        Utilities.textCenter("Please enter a name with 9 characters or less and no spaces", ' ');
+        Utilities.textCenter("Please enter a name with 8 characters or less and no spaces", ' ');
         System.out.println(String.format("\nPlayer %s enter your name...", playerNumber));
         String input = console.next();
+        if (input.length() > 8) {
+            return nameSelect(playerNumber, console);
+        }
 
         return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
     }
@@ -116,7 +135,7 @@ public class Utilities {
         textCenter("Press ENTER to continue...", ' ');
         console.nextLine();
     }
-    
+
     public static void enterToContinue(Scanner console) {
         textCenter("Press ENTER to continue", ' ');
         console.nextLine();

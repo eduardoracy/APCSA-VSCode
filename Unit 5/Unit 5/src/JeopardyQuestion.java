@@ -9,12 +9,12 @@ public class JeopardyQuestion {
     private int attempts;
     private String answerFormat;
 
-    public JeopardyQuestion(String question, String answer, String answerFormat, int value, boolean answered) {
+    public JeopardyQuestion(String question, String answer, String answerFormat, int value) {
         this.question = question;
         this.answer = answer;
-        this.value = value;
-        this.answered = answered;
         this.answerFormat = answerFormat;
+        this.value = value;
+        this.answered = false;
     }
 
     public int getValue() {
@@ -25,23 +25,28 @@ public class JeopardyQuestion {
         return answered;
     }
 
-    public void askQuestion(JeopardyBoard board, Scanner console) {
+    public void dailyDouble() {
+        value *= 2;
+    }
+
+    public void askQuestion(JeopardyBoard board, JeopardyBoardCategory category, Scanner console) {
         JeopardyPlayer player = board.getCurrentPlayer();
         while (!answered || attempts <= 2) {
             attempts++;
             Utilities.clearScreen();
             Utilities.printTurnHeader(player.getName(), "Points:", player.getPoints());
+            System.out.println(String.format("%s for %s", category.getCategory(), value));
             System.out.println(String.format("\n%s?", question));
             System.out.println(String.format("%s ", answerFormat));
             if (console.next().equalsIgnoreCase(answer)) {
-                player.addPoints(value);
+                player.incrementPoints(value);
                 answered = true;
             } else {
-                player.addPoints(value * (-1));
+                player.incrementPoints(value * (-1));
                 Utilities.textCenter("Incorrect Response!!", ' ');
                 Utilities.textCenter(String.format("%s now has %s points", player.getName(), player.getPoints()), ' ');
                 System.out.println();
-                if (attempts == 1) { 
+                if (attempts == 1) {
                     board.setCurrentPlayer(player);
                     player = board.getCurrentPlayer();
                     Utilities.textCenter(String.format("%s would you like to steal?", player.getName()), ' ');

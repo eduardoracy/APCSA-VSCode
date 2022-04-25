@@ -17,12 +17,20 @@ public class JeopardyPlayer {
         return points;
     }
 
-    public void addPoints(int points) {
+    public void incrementPoints(int points) {
         this.points += points;
+    }
+
+    public void decrementPoints(int points) {
+        this.points -= points;
     }
 
     public int getPlayerNumber() {
         return playerNumber;
+    }
+
+    public void printTurnHeader() {
+        Utilities.printTurnHeader(name, "Points: ", points);
     }
 
 }
