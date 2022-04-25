@@ -348,7 +348,7 @@ public class JeopardyBoard {
                 long endTime = System.currentTimeMillis();
 
                 if ((endTime - startTime) <= 30000) {
-                        if (finalJeopardyAnswer == 5) {
+                        if (input == finalJeopardyAnswer) {
                                 return true;
                         }
                 } else {
