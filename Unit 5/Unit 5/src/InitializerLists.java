@@ -2,7 +2,7 @@ import java.util.Arrays;
 
 public class InitializerLists {
     public static void main(String[] args) {
-        Utilities.clearScreen();
+        Utility.clearScreen();
         String[] colors = {"red", "blue", "green", "purple"};
         System.out.println("The array of colors: ");
         for (int i = 0; i < colors.length; i++) {

@@ -33,9 +33,9 @@ class JeopardyQuestion {
         JeopardyPlayer player = board.getCurrentPlayer();
         while (!answered || attempts <= 2) {
             attempts++;
-            Utilities.clearScreen();
+            Utility.clearScreen();
 						
-            Utilities.printTurnHeader(player.getName(), "Points:", player.getPoints());
+            Utility.printTurnHeader(player.getName(), "Points:", player.getPoints());
             System.out.println(String.format("%s for %s", category.getCategory(), value));
             System.out.println(String.format("\n%s?", question));
             System.out.println(String.format("%s ", answerFormat));
@@ -45,13 +45,13 @@ class JeopardyQuestion {
                 answered = true;
             } else {
                 player.incrementPoints(value * (-1));
-                Utilities.textCenter("Incorrect Response!!", ' ');
-                Utilities.textCenter(String.format("%s now has %s points", player.getName(), player.getPoints()), ' ');
+                Utility.textCenter("Incorrect Response!!", ' ');
+                Utility.textCenter(String.format("%s now has %s points", player.getName(), player.getPoints()), ' ');
                 System.out.println();
                 if (attempts == 1) {
                     board.setCurrentPlayer(player);
                     player = board.getCurrentPlayer();
-                    Utilities.textCenter(String.format("%s would you like to steal?", player.getName()), ' ');
+                    Utility.textCenter(String.format("%s would you like to steal?", player.getName()), ' ');
                     if (console.next().equalsIgnoreCase("no")) {
                         answered = true;
                     }
@@ -60,6 +60,6 @@ class JeopardyQuestion {
                 }
             }
         }
-        Utilities.enterToContinue(console);
+        Utility.enterToContinue(console);
     }
 }

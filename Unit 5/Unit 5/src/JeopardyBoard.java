@@ -5,14 +5,16 @@ public class JeopardyBoard {
         private static Scanner console = new Scanner(System.in);
         private JeopardyPlayer currentPlayer, player1, player2;
         private ArrayList<JeopardyBoardCategory> categories = new ArrayList<JeopardyBoardCategory>();
+        private JeopardyFinal finalJeopardy;
 
-        public JeopardyBoard(JeopardyPlayer player1, JeopardyPlayer player2, JeopardyBoardCategory... categories) {
+        public JeopardyBoard(JeopardyPlayer player1, JeopardyPlayer player2, JeopardyFinal finalJeopardy, JeopardyBoardCategory... categories) {
                 for (JeopardyBoardCategory category : categories) {
                         this.categories.add(category);
                 }
                 this.player1 = player1;
                 this.player2 = player2;
                 currentPlayer = this.player1;
+                this.finalJeopardy = finalJeopardy;
         }
 
         public boolean allQuestionsAnswered() {
@@ -54,6 +56,10 @@ public class JeopardyBoard {
                 return (playerNumber == 1) ? this.player1 : this.player2;
         }
 
+        public JeopardyFinal getFinalJeopardy() {
+                return finalJeopardy;
+        }
+
         public void printBoard() {
                 printBoardPlayer();
                 printBoardHeader();
@@ -67,7 +73,7 @@ public class JeopardyBoard {
                                 String str = " ";
                                 if (j == 2 || j == 3) {
                                         if (i == 0) {
-                                                Utilities.sameLineTextCenter(printBoardPlayerBox("╔", "╤", "═", "╗"),
+                                                Utility.sameLineTextCenter(printBoardPlayerBox("╔", "╤", "═", "╗"),
                                                                 ' ');
                                         } else {
                                                 JeopardyPlayer player = getPlayer((j % 2) + 1);
@@ -80,7 +86,7 @@ public class JeopardyBoard {
                         System.out.println("║");
                 }
 
-                Utilities.sameLineTextCenter(printBoardPlayerBox("╚", "╧", "═", "╝"), ' ');
+                Utility.sameLineTextCenter(printBoardPlayerBox("╚", "╧", "═", "╝"), ' ');
         }
 
         public String printBoardPlayerBox(String left, String intersection, String filler, String right) {
@@ -140,7 +146,7 @@ public class JeopardyBoard {
         }
 
         public void printBoardCellSpacing(String str) {
-                Utilities.sameLineTextCenter(str, ' ', 12);
+                Utility.sameLineTextCenter(str, ' ', 12);
         }
 
         public String wordsPerRow(String category, int row) {
@@ -182,8 +188,10 @@ public class JeopardyBoard {
 
         public static JeopardyBoard createBoard() {
                 return new JeopardyBoard(
-                                new JeopardyPlayer(Utilities.nameSelect(1, console), 0, 1),
-                                new JeopardyPlayer(Utilities.nameSelect(2, console), 0, 2),
+                                new JeopardyPlayer(Utility.nameSelect(1, console), 0, 1),
+                                new JeopardyPlayer(Utility.nameSelect(2, console), 0, 2),
+
+                                new  JeopardyFinal("(5 - 2) + 4 / 3 * 2 =", "5"),
 
                                 new JeopardyBoardCategory("Variability",
                                                 new JeopardyQuestion(
@@ -318,43 +326,9 @@ public class JeopardyBoard {
                                                                 "What is", 1000))
 
                 );
+
+                
                 // Final ASSUMING NUMBER ARE INTEGERS, USING JAVA MATH RULES, COMPUTE THE
                 // ANSWER: (5 - 2) + 4 / 3 * 2 = answer 5
-        }
-
-        private String finalJeopardyQuestion = "(5 - 2) + 4 / 3 * 2 =";
-        private int finalJeopardyAnswer = 5;
-        private int[] wagers = new int[2];
-
-        public int getFinalJeopardyAnswer() {
-                return finalJeopardyAnswer;
-        }
-
-        public int[] getFinalJeopardyWagers() {
-                return wagers;
-        }
-
-        public boolean askFinalJeopardy() {
-                Utilities.clearScreen();
-                Utilities.printTurnHeader("Final Jeopardy", getCurrentPlayer().getName());
-
-                System.out.println("You will have 30 seconds to read and answer the question");
-                Utilities.enterToContinue(console);
-
-                Utilities.textCenter(finalJeopardyQuestion, ' ');
-                long startTime = System.currentTimeMillis();
-
-                int input = console.nextInt();
-                long endTime = System.currentTimeMillis();
-
-                if ((endTime - startTime) <= 30000) {
-                        if (input == finalJeopardyAnswer) {
-                                return true;
-                        }
-                } else {
-                        Utilities.textCenter("You ran out of time...", ' ');
-                        Utilities.enterToContinue(console);
-                }
-                return false;
         }
 }

@@ -82,7 +82,7 @@ public class TicTacToe {
             continuePlay = endScreen(gameLoop(turnCounter, playerName1, playerName2), playerName1, playerName2);
         }
         System.out.println();
-        Utilities.textCenter("Thank you for playing!!", ' ');
+        Utility.textCenter("Thank you for playing!!", ' ');
         console.close();
     }
 
@@ -95,7 +95,7 @@ public class TicTacToe {
     }
 
     public boolean gameLogic(int turnCounter, String playerName1, String playerName2) {
-        Utilities.clearScreen();
+        Utility.clearScreen();
         int cellLocation = -1;
         boolean marked = false;
 
@@ -104,11 +104,11 @@ public class TicTacToe {
             System.out.println("Enter what cell you would like to mark:");
             cellLocation = (console.nextInt() - 1);
             marked = markBoard(cellLocation, getMarker(turnCounter));
-            Utilities.clearScreen();
+            Utility.clearScreen();
         }
         printBoard(turnCounter, playerName1, playerName2);
         
-        Utilities.textCenter("Press ENTER to continue...", ' ');
+        Utility.textCenter("Press ENTER to continue...", ' ');
         console.nextLine();
         console.nextLine();
 
@@ -116,8 +116,8 @@ public class TicTacToe {
     }
 
     public void printTurnHeader(int turnCounter, String playerName1, String playerName2) {
-        Utilities.textCenter(" " + getName(turnCounter, playerName1, playerName2) + " ", '═');
-        Utilities.textCenter(" Turn: " + turnCounter + " ", '─');
+        Utility.textCenter(" " + getName(turnCounter, playerName1, playerName2) + " ", '═');
+        Utility.textCenter(" Turn: " + turnCounter + " ", '─');
         System.out.println();
     }
 
@@ -128,14 +128,14 @@ public class TicTacToe {
                 board[cellLoc] = marker;
                 return true;
             } else {
-                Utilities.textCenter("Location unavailable, please choose another cell to mark", ' ');
-                Utilities.textCenter("Press ENTER to continue", ' ');
+                Utility.textCenter("Location unavailable, please choose another cell to mark", ' ');
+                Utility.textCenter("Press ENTER to continue", ' ');
                 console.nextLine();
                 console.nextLine();
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            Utilities.textCenter("Location out of bounds, please choose another cell to mark", ' ');
-            Utilities.textCenter("Press ENTER to continue", ' ');
+            Utility.textCenter("Location out of bounds, please choose another cell to mark", ' ');
+            Utility.textCenter("Press ENTER to continue", ' ');
             console.nextLine();
             console.nextLine();
         }
@@ -171,25 +171,25 @@ public class TicTacToe {
     }
 
     public void enterToStart() {
-        Utilities.clearScreen();
+        Utility.clearScreen();
 
-        Utilities.textCenter("Press ENTER to start...", ' ');
+        Utility.textCenter("Press ENTER to start...", ' ');
         console.nextLine();
 
-        Utilities.clearScreen();
+        Utility.clearScreen();
     }
 
     public void startScreen() {
-        Utilities.clearScreen();
+        Utility.clearScreen();
 
-        Utilities.textCenter(" Welcome to Tic-Tac-Toe!! ", '═');
-        Utilities.textCenter(" Designed by Eduardo Racy ", '─');
+        Utility.textCenter(" Welcome to Tic-Tac-Toe!! ", '═');
+        Utility.textCenter(" Designed by Eduardo Racy ", '─');
 
         System.out.println("1. Start Game");
         System.out.println("2. Instructions");
         int input = console.nextInt();
 
-        Utilities.clearScreen();
+        Utility.clearScreen();
 
         if (input == 1) {
             return;
@@ -197,9 +197,9 @@ public class TicTacToe {
             instructions();
             startScreen();
         } else {
-            Utilities.clearScreen();
-            Utilities.textCenter(" Welcome to Tic-Tac-Toe!! ", '═');
-            Utilities.textCenter(" Designed by Eduardo Racy ", '─');
+            Utility.clearScreen();
+            Utility.textCenter(" Welcome to Tic-Tac-Toe!! ", '═');
+            Utility.textCenter(" Designed by Eduardo Racy ", '─');
             System.out.println("Invalid Selection");
             System.out.println("Press ENTER to try again...");
             console.nextLine();
@@ -210,12 +210,12 @@ public class TicTacToe {
     }
 
     public String nameSelect(int playerNumber) {
-        Utilities.clearScreen();
-        Utilities.textCenter(" New game ", '═');
-        Utilities.textCenter(" Name Selection ", '─');
+        Utility.clearScreen();
+        Utility.textCenter(" New game ", '═');
+        Utility.textCenter(" Name Selection ", '─');
         System.out.println();
 
-        Utilities.textCenter("Please enter a name with 9 characters or less and no spaces", ' ');
+        Utility.textCenter("Please enter a name with 9 characters or less and no spaces", ' ');
         System.out.println(String.format("\nPlayer %s enter your name...", playerNumber));
         String input = console.next();
 
@@ -223,33 +223,33 @@ public class TicTacToe {
     }
 
     public void instructions() {
-        Utilities.textCenter(" New game ", '═');
-        Utilities.textCenter(" Instructions ", '─');
+        Utility.textCenter(" New game ", '═');
+        Utility.textCenter(" Instructions ", '─');
         System.out.println();
 
-        Utilities.textCenter("Each playerName will be assigned either an X or O.", ' ');
+        Utility.textCenter("Each playerName will be assigned either an X or O.", ' ');
         System.out.println();
 
-        Utilities.textCenter("The first playerName to get a 3 in a row wins,", ' ');
-        Utilities.textCenter("this can be achieved horizontally, vertically, or diagonally.", ' ');
+        Utility.textCenter("The first playerName to get a 3 in a row wins,", ' ');
+        Utility.textCenter("this can be achieved horizontally, vertically, or diagonally.", ' ');
         System.out.println();
 
-        Utilities.textCenter("If all 9 squares are marked, and neither playerName has won,", ' ');
-        Utilities.textCenter("the game ends in a tie.", ' ');
+        Utility.textCenter("If all 9 squares are marked, and neither playerName has won,", ' ');
+        Utility.textCenter("the game ends in a tie.", ' ');
         System.out.println();
 
-        Utilities.textCenter("Press ENTER to continue...", ' ');
+        Utility.textCenter("Press ENTER to continue...", ' ');
         console.nextLine();
         console.nextLine();
 
-        Utilities.clearScreen();
+        Utility.clearScreen();
 
-        Utilities.textCenter(" New game ", '═');
-        Utilities.textCenter(" Instructions ", '─');
+        Utility.textCenter(" New game ", '═');
+        Utility.textCenter(" Instructions ", '─');
         System.out.println();
 
-        Utilities.textCenter("In order to mark a cell please select a digit 1-9,", ' ');
-        Utilities.textCenter("corresponding to the chart below.", ' ');
+        Utility.textCenter("In order to mark a cell please select a digit 1-9,", ' ');
+        Utility.textCenter("corresponding to the chart below.", ' ');
         System.out.println();
 
         int boardRow = 1;
@@ -269,18 +269,18 @@ public class TicTacToe {
                     boardRow++;
                 }
             }
-            Utilities.textCenter(line, ' ');
+            Utility.textCenter(line, ' ');
         }
         System.out.println();
 
-        Utilities.textCenter("Press ENTER to continue...", ' ');
+        Utility.textCenter("Press ENTER to continue...", ' ');
         console.nextLine();
     }
 
     public boolean endScreen(int turnCounter, String playerName1, String playerName2) {
-        Utilities.clearScreen();
-        Utilities.textCenter(" Game Over ", '═');
-        Utilities.textCenter(" Turn: " + turnCounter + " ", '─');
+        Utility.clearScreen();
+        Utility.textCenter(" Game Over ", '═');
+        Utility.textCenter(" Turn: " + turnCounter + " ", '─');
         boolean won = false;
 
         for (int i = 0; i < board.length; i++) {
@@ -292,12 +292,12 @@ public class TicTacToe {
 
         if (won) {
             System.out.println();
-            Utilities.textCenter(getName(turnCounter, playerName1, playerName2) + " is the winner!", ' ');
+            Utility.textCenter(getName(turnCounter, playerName1, playerName2) + " is the winner!", ' ');
         } else {
-            Utilities.textCenter("Game has ended in a tie", ' ');
+            Utility.textCenter("Game has ended in a tie", ' ');
         }
 
-        Utilities.textCenter("Would you like to return to start screen?", ' ');
+        Utility.textCenter("Would you like to return to start screen?", ' ');
         if (console.next().equalsIgnoreCase("no")) {
             return false;
         } else {

@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Utilities {
+public class Utility {
 
     public static void clearScreen(int spaces) {
         for (int i = 0; i < spaces; i++) {
@@ -62,24 +62,24 @@ public class Utilities {
     }
 
     public static void printTurnHeader(String name, String secondLineTitle, int secondLineNumber) {
-        Utilities.textCenter(String.format(" %s ", name), '═');
-        Utilities.textCenter(String.format(" %s %s ", secondLineTitle, secondLineNumber), '─');
+        Utility.textCenter(String.format(" %s ", name), '═');
+        Utility.textCenter(String.format(" %s %s ", secondLineTitle, secondLineNumber), '─');
         System.out.println();
     }
 
     public static void printTurnHeader(String name, String secondLineTitle) {
-        Utilities.textCenter(String.format(" %s ", name), '═');
-        Utilities.textCenter(String.format(" %s ", secondLineTitle), '─');
+        Utility.textCenter(String.format(" %s ", name), '═');
+        Utility.textCenter(String.format(" %s ", secondLineTitle), '─');
         System.out.println();
     }
 
     public static String nameSelect(int playerNumber, Scanner console) {
-        Utilities.clearScreen();
-        Utilities.textCenter(" New game ", '═');
-        Utilities.textCenter(" Name Selection ", '─');
+        Utility.clearScreen();
+        Utility.textCenter(" New game ", '═');
+        Utility.textCenter(" Name Selection ", '─');
         System.out.println();
 
-        Utilities.textCenter("Please enter a name with 8 characters or less and no spaces", ' ');
+        Utility.textCenter("Please enter a name with 8 characters or less and no spaces", ' ');
         System.out.println(String.format("\nPlayer %s enter your name...", playerNumber));
         String input = console.next();
         if (input.length() > 8) {
@@ -90,16 +90,16 @@ public class Utilities {
     }
 
     public static void startScreen(String gameName, String[] instructions, Scanner console) {
-        Utilities.clearScreen();
+        Utility.clearScreen();
 
-        Utilities.textCenter(String.format(" Welcome to %s!! ", gameName), '═');
-        Utilities.textCenter(" Designed by Eduardo Racy ", '─');
+        Utility.textCenter(String.format(" Welcome to %s!! ", gameName), '═');
+        Utility.textCenter(" Designed by Eduardo Racy ", '─');
 
         System.out.println("1. Start Game");
         System.out.println("2. Instructions");
         int input = console.nextInt();
 
-        Utilities.clearScreen();
+        Utility.clearScreen();
 
         if (input == 1) {
             return;
@@ -107,9 +107,9 @@ public class Utilities {
             instructions(instructions, console);
             startScreen(gameName, instructions, console);
         } else {
-            Utilities.clearScreen();
-            Utilities.textCenter(String.format(" Welcome to %s!! ", gameName), '═');
-            Utilities.textCenter(" Designed by Eduardo Racy ", '─');
+            Utility.clearScreen();
+            Utility.textCenter(String.format(" Welcome to %s!! ", gameName), '═');
+            Utility.textCenter(" Designed by Eduardo Racy ", '─');
             System.out.println("Invalid Selection");
             System.out.println("Press ENTER to try again...");
             console.nextLine();
@@ -120,8 +120,8 @@ public class Utilities {
     }
 
     public static void instructions(String[] instructions, Scanner console) {
-        Utilities.textCenter(" New game ", '═');
-        Utilities.textCenter(" Instructions ", '─');
+        Utility.textCenter(" New game ", '═');
+        Utility.textCenter(" Instructions ", '─');
         System.out.println();
         for (String line : instructions) {
             textCenter(line, ' ');

@@ -30,7 +30,7 @@ public class JeopardyPlayer {
     }
 
     public void printTurnHeader() {
-        Utilities.printTurnHeader(name, "Points: ", points);
+        Utility.printTurnHeader(name, "Points: ", points);
     }
 
 }
