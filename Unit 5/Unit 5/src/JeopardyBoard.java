@@ -62,8 +62,8 @@ public class JeopardyBoard {
 
         public void printBoard() {
                 printBoardPlayer();
-                // printBoardHeader();
-                // printBoardBody();
+                printBoardHeader();
+                printBoardBody();
         }
 
         public void printBoardPlayer() {
@@ -73,7 +73,7 @@ public class JeopardyBoard {
                                 String str = " ";
                                 if (j == 2 || j == 3) {
                                         if (i == 0) {
-                                                System.out.println(printBoardPlayerBox("╔", "╤", "═", "╗"));
+                                                System.out.println(boardPlayerBox("╔", "╤", "═", "╗"));
                                         } else {
                                                 JeopardyPlayer player = getPlayer((j % 2) + 1);
                                                 System.out.print((j == 2) ? "║" : "│");
@@ -85,10 +85,11 @@ public class JeopardyBoard {
                         System.out.println("║");
                 }
 
-                Utility.sameLineTextCenter(printBoardPlayerBox("╚", "╧", "═", "╝"), ' ');
+                Utility.sameLineTextCenter(boardPlayerBox("╚", "╧", "═", "╝"), ' ');
+                System.out.println();
         }
 
-        public String printBoardPlayerBox(String left, String intersection, String filler, String right) {
+        public String boardPlayerBox(String left, String intersection, String filler, String right) {
                 String output = (left);
                 for (int i = 0; i < 12; i++) {
                         output += filler;
