@@ -2,18 +2,33 @@ public class SelectionSort {
 
     public static void main(String[] args) {
         int[] num = {12,56,1,4,3,78,83};
-        System.out.println("Unsorted: ");
 
+        System.out.println("Unsorted: ");
         for (int number : num) {
-            System.out.println(number + " ");
+            System.out.print(number + " ");
         }
 
         selectionSort(num);
 
-        System.out.println("Sorted: ");
+        System.out.println("\nSorted: ");
 
         for (int number : num) {
             System.out.print(number + " ");
+        }
+
+        String[] names = {"John", "Paul", "Gavin", "Cayla", "Joe"};
+
+        System.out.println("\n\nUnsorted: ");
+
+        for (String name : names) {
+            System.out.print(name + " ");
+        }
+
+        selectionSort(names);
+
+        System.out.println("\nSorted: ");
+        for (String name : names) {
+            System.out.print(name + " ");
         }
     }
 
@@ -41,18 +56,22 @@ public class SelectionSort {
         }
     }
 
+    public static void selectionSort(String[] arr) {
+        selectionSort(arr, 0);
+    }
+
     public static void selectionSort(String[] arr, int index) {
         if (index == arr.length) {
             return;
         }
         int min = index;
         for (int i = min + 1; i < arr.length; i++) {
-            if (arr[i].compareTo(arr[min])) {
+            if (arr[i].compareTo(arr[min]) <= -1) {
                 min = i;
-            }
+            } 
         }
 
-        int temp = arr[min];
+        String temp = arr[min];
         arr[min] = arr[index];
         arr[index] = temp;
 

@@ -23,7 +23,7 @@ public class JeopardyFinal {
         Utility.printTurnHeader("Final Jeopardy", player.getName());
 
         int points = player.getPoints();
-        System.out.println(String.format("Available points: %s", player.getPoints()));
+        System.out.format("Available points: %s\n", player.getPoints());
         System.out.println("How many points would you like to wager?");
         int wager = console.nextInt();
         if (player.getPlayerNumber() == 1) {

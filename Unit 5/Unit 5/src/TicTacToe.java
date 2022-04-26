@@ -147,7 +147,8 @@ public class TicTacToe {
             return false;
         }
         for (int[] coordinate : winPosibilitiesCoordinates[cellLoc]) {
-            if (marker == board[(coordinate[0] - 1)] || marker == board[(coordinate[1] - 1)]) {
+            if (marker == board[(coordinate[0] - 1)] &&
+            marker == board[(coordinate[1] - 1)]) {
                 return true;
             }
         }

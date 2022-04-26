@@ -80,7 +80,7 @@ public class Utility {
         System.out.println();
 
         Utility.textCenter("Please enter a name with 8 characters or less and no spaces", ' ');
-        System.out.println(String.format("\nPlayer %s enter your name...", playerNumber));
+        System.out.format("\nPlayer %s enter your name...\n", playerNumber);
         String input = console.next();
         if (input.length() > 8) {
             return nameSelect(playerNumber, console);

@@ -1,6 +1,15 @@
+
 public class CommonAlgorithms {
     public static void main(String[] args) {
-        int[] arr = {25,656,93,76,1};
+        int[] arr = {1,2,3,4,5};
+        Utility.clearScreen();
+
+        System.out.println("Array: ");
+        for (int num : arr) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
+
         int minIndex = findMin(arr);
         System.out.println(String.format("Min: %s on index %s", arr[minIndex], minIndex));
         int maxIndex = findMax(arr);

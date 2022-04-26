@@ -36,9 +36,10 @@ class JeopardyQuestion {
             Utility.clearScreen();
 						
             Utility.printTurnHeader(player.getName(), "Points:", player.getPoints());
-            System.out.println(String.format("%s for %s", category.getCategory(), value));
-            System.out.println(String.format("\n%s?", question));
-            System.out.println(String.format("%s ", answerFormat));
+            System.out.format("%s for %s\n", category.getCategory(), value);
+            System.out.format("%s?\n", question);
+            System.out.format("%s ", answerFormat);
+            System.out.println();
 					
             if (console.next().equalsIgnoreCase(answer)) {
                 player.incrementPoints(value);

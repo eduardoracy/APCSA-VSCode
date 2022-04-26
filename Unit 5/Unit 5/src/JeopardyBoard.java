@@ -61,9 +61,9 @@ public class JeopardyBoard {
         }
 
         public void printBoard() {
-                // printBoardPlayer();
-                printBoardHeader();
-                printBoardBody();
+                printBoardPlayer();
+                // printBoardHeader();
+                // printBoardBody();
         }
 
         public void printBoardPlayer() {
@@ -73,9 +73,7 @@ public class JeopardyBoard {
                                 String str = " ";
                                 if (j == 2 || j == 3) {
                                         if (i == 0) {
-                                                Utility.sameLineTextCenter(printBoardPlayerBox("╔", "╤", "═", "╗"),
-                                                                ' ');
-                                                System.out.println();
+                                                System.out.println(printBoardPlayerBox("╔", "╤", "═", "╗"));
                                         } else {
                                                 JeopardyPlayer player = getPlayer((j % 2) + 1);
                                                 System.out.print((j == 2) ? "║" : "│");

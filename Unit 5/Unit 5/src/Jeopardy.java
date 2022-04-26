@@ -37,7 +37,7 @@ public class Jeopardy {
         for (int i = 0; i < board.getCategories().size(); i++) {
             JeopardyBoardCategory category = board.getCategories().get(i);
             if (!category.allCategoryQuestionsAnswered())
-                System.out.println(String.format("%s. %s", i + 1, category.getCategory()));
+                System.out.format("%s. %s\n", i + 1, category.getCategory());
             categories += String.format("%s", i + 1);
         }
 
