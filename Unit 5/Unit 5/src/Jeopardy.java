@@ -1,7 +1,5 @@
 import java.util.Scanner;
 
-import javax.rmi.CORBA.Util;
-
 public class Jeopardy {
     Scanner console = new Scanner(System.in);
     String[] instructions = { "asdf" };
@@ -40,7 +38,7 @@ public class Jeopardy {
             JeopardyBoardCategory category = board.getCategories().get(i);
             if (!category.allCategoryQuestionsAnswered())
                 System.out.println(String.format("%s. %s", i + 1, category.getCategory()));
-            categories.concat(String.format("%s", i + 1));
+            categories += String.format("%s", i + 1);
         }
 
         String input = console.next();

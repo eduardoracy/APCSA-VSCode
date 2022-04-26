@@ -61,7 +61,7 @@ public class JeopardyBoard {
         }
 
         public void printBoard() {
-                printBoardPlayer();
+                // printBoardPlayer();
                 printBoardHeader();
                 printBoardBody();
         }
@@ -75,6 +75,7 @@ public class JeopardyBoard {
                                         if (i == 0) {
                                                 Utility.sameLineTextCenter(printBoardPlayerBox("╔", "╤", "═", "╗"),
                                                                 ' ');
+                                                System.out.println();
                                         } else {
                                                 JeopardyPlayer player = getPlayer((j % 2) + 1);
                                                 System.out.print((j == 2) ? "║" : "│");
@@ -92,13 +93,13 @@ public class JeopardyBoard {
         public String printBoardPlayerBox(String left, String intersection, String filler, String right) {
                 String output = (left);
                 for (int i = 0; i < 12; i++) {
-                        output.concat(filler);
+                        output += filler;
                 }
-                output.concat(intersection);
+                output += intersection;
                 for (int i = 0; i < 12; i++) {
-                        output.concat(filler);
+                        output += filler;
                 }
-                return output.concat(right);
+                return (output += right);
         }
 
         public void printBoardLine(String left, String intercepts, String filler, String right) {
