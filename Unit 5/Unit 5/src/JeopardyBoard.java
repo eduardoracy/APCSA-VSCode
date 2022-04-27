@@ -69,23 +69,24 @@ public class JeopardyBoard {
         public void printBoardPlayer() {
 
                 for (int i = 0; i <= 3; i++) {
+                        String str = "";
                         for (int j = 0; j < ((categories.size() - 2) / 2) + 2; j++) {
-                                String str = " ";
+                                
                                 if (j == 2 || j == 3) {
-                                        if (i == 0) {
-                                                System.out.println(boardPlayerBox("╔", "╤", "═", "╗"));
+                                        if (i == 0 && j == 2) {
+                                                Utility.textCenter(boardPlayerBox("╔", "╤", "═", "╗"), ' ');
                                         } else {
                                                 JeopardyPlayer player = getPlayer((j % 2) + 1);
-                                                System.out.print((j == 2) ? "║" : "│");
-                                                str = String.format("%s %s", player.getName(), player.getPoints());
+                                                str += ((j == 2) ? "║" : "│");
+                                                str += String.format("%s %s", player.getName(), player.getPoints());
                                         }
                                 }
-                                printBoardCellSpacing(wordsPerRow(str, i));
                         }
-                        System.out.println("║");
+                        str += "║";
+                        Utility.textCenter(wordsPerRow(str, i), ' ');
                 }
 
-                Utility.sameLineTextCenter(boardPlayerBox("╚", "╧", "═", "╝"), ' ');
+                Utility.textCenter(boardPlayerBox("╚", "╧", "═", "╝"), ' ');
                 System.out.println();
         }
 
