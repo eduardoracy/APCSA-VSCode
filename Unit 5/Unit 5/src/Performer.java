@@ -5,6 +5,11 @@ public class Performer {
     public Performer() {
         
     }
+
+    public Performer(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
     
     public int getAge() {
         return age;
@@ -20,5 +25,9 @@ public class Performer {
 
     public void perform() {
         System.out.println("performing for an audience!");
+    }
+
+    public String toString() {
+        return String.format("Name: %s\nAge: %s", name, age);
     }
 }
