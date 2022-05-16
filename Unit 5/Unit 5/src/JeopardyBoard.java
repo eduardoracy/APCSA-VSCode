@@ -1,20 +1,20 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class JeopardyBoard {
         private static Scanner console = new Scanner(System.in);
         private JeopardyPlayer currentPlayer, player1, player2;
-        private ArrayList<JeopardyBoardCategory> categories = new ArrayList<JeopardyBoardCategory>();
+        private ArrayList<JeopardyBoardCategory> categories;
         private JeopardyFinal finalJeopardy;
 
-        public JeopardyBoard(JeopardyPlayer player1, JeopardyPlayer player2, JeopardyFinal finalJeopardy, JeopardyBoardCategory... categories) {
-                for (JeopardyBoardCategory category : categories) {
-                        this.categories.add(category);
-                }
-                this.player1 = player1;
-                this.player2 = player2;
+        public JeopardyBoard(String player1, String player2) {
+                this.categories = createBoard();
+                this.player1 = new JeopardyPlayer(player1, 0, 1);
+                this.player2 =  new JeopardyPlayer(player2, 0, 2);
                 currentPlayer = this.player1;
-                this.finalJeopardy = finalJeopardy;
+                this.finalJeopardy = new  JeopardyFinal("(5 - 2) + 4 / 3 * 2 =", "5");
+
         }
 
         public boolean allQuestionsAnswered() {
@@ -44,14 +44,6 @@ public class JeopardyBoard {
                 return currentPlayer;
         }
 
-        public JeopardyPlayer getPlayer1() {
-                return player1;
-        }
-
-        public JeopardyPlayer getPlayer2() {
-                return player2;
-        }
-
         public JeopardyPlayer getPlayer(int playerNumber) {
                 return (playerNumber == 1) ? this.player1 : this.player2;
         }
@@ -64,6 +56,10 @@ public class JeopardyBoard {
                 printBoardPlayer();
                 printBoardHeader();
                 printBoardBody();
+        }
+
+        public void pTopPlayer() {
+                
         }
 
         public void printBoardPlayer() {
@@ -181,19 +177,14 @@ public class JeopardyBoard {
                 return category.split(" ");
         }
 
-        public void dailyDouble() {
+        public void setDailyDouble() {
                 categories.get((int) (Math.random() * 6) + 1).getQuestion().get((int) (Math.random() * 6) + 1)
                                 .dailyDouble();
                 ;
         }
 
-        public static JeopardyBoard createBoard() {
-                return new JeopardyBoard(
-                                new JeopardyPlayer(Utility.nameSelect(1, console), 0, 1),
-                                new JeopardyPlayer(Utility.nameSelect(2, console), 0, 2),
-
-                                new  JeopardyFinal("(5 - 2) + 4 / 3 * 2 =", "5"),
-
+        public static ArrayList<JeopardyBoardCategory> createBoard() {
+                return new ArrayList<JeopardyBoardCategory>( Arrays.asList(
                                 new JeopardyBoardCategory("Variability",
                                                 new JeopardyQuestion(
                                                                 "Another name for a static variable",
@@ -326,7 +317,7 @@ public class JeopardyBoard {
                                                                 "cohesive",
                                                                 "What is", 1000))
 
-                );
+                ));
 
                 
                 // Final ASSUMING NUMBER ARE INTEGERS, USING JAVA MATH RULES, COMPUTE THE

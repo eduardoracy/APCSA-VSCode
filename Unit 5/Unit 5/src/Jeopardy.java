@@ -14,16 +14,15 @@ public class Jeopardy {
         boolean continuePlay = true;
         while (continuePlay) {
             Utility.startScreen("Java Jeopardy", instructions, console);
-            board = JeopardyBoard.createBoard();
+            board = new JeopardyBoard(Utility.nameSelect(1, console), Utility.nameSelect(2, console));
             gameLogic();
             continuePlay = endScreen();
         }
     }
 
     public void gameLogic() {
-        if (!board.allQuestionsAnswered()) {
+        while (!board.allQuestionsAnswered()) {
             questionSelection(categorySelection());
-            gameLogic();
         }
         finalJeopardy();
     }
@@ -55,19 +54,20 @@ public class Jeopardy {
 
     public void questionSelection(JeopardyBoardCategory category) {
         Utility.clearScreen();
-        board.getCurrentPlayer().printTurnHeader();
+        Utility.printTurnHeader(board.getCurrentPlayer().getName(), category.getCategory());
         board.printBoard();
 
         System.out.println("Enter the question amount you would like to attempt: ");
         String input = console.next();
 
         for (JeopardyQuestion question : category.getQuestion()) {
-            int inputValue = Integer.valueOf(input);
+            int inputValue = Integer.parseInt(input);
             if (inputValue == question.getValue()) {
                 category.categoryQuestion(inputValue).askQuestion(board, category, console);
                 return;
             }
         }
+        
         Utility.textCenter("Category unavailable, please choose another category", ' ');
         Utility.enterToContinue(console);
         questionSelection(category);
