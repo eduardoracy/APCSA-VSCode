@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 
 public class Jeopardy {
@@ -30,7 +31,7 @@ public class Jeopardy {
     public JeopardyBoardCategory categorySelection() {
         Utility.clearScreen();
         board.getCurrentPlayer().printTurnHeader();
-        board.printBoard();
+        // board.printBoard();
 
         String categories = "";
         for (int i = 0; i < board.getCategories().size(); i++) {
@@ -55,7 +56,7 @@ public class Jeopardy {
     public void questionSelection(JeopardyBoardCategory category) {
         Utility.clearScreen();
         Utility.printTurnHeader(board.getCurrentPlayer().getName(), category.getCategory());
-        board.printBoard();
+        // board.printBoard();
 
         System.out.println("Enter the question amount you would like to attempt: ");
         String input = console.next();
@@ -83,7 +84,7 @@ public class Jeopardy {
 
         JeopardyFinal finalJeopardy = board.getFinalJeopardy();
         finalJeopardy.playerWagers(board.getCurrentPlayer(), console);
-        board.setCurrentPlayer(board.getCurrentPlayer());
+        board.changeCurrentPlayer();
         finalJeopardy.playerWagers(board.getCurrentPlayer(), console);
 
         JeopardyPlayer player1 = board.getPlayer(1);
