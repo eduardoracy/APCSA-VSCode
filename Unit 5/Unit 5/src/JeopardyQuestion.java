@@ -38,7 +38,7 @@ class JeopardyQuestion {
             Utility.printTurnHeader(player.getName(), "Points:", player.getPoints());
             System.out.format("%s for %s\n", category.getCategory(), value);
             System.out.format("%s?\n", question);
-            System.out.format("%s:\n", answerFormat);
+            System.out.format("%s ", answerFormat);
             console.nextLine();
             String response = console.nextLine();
 
