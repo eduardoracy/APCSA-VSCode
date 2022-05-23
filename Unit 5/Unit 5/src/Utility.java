@@ -9,10 +9,10 @@ public class Utility {
     }
 
     public static void clearScreen() {
-        clearScreen(15);
+        clearScreen(30);
     }
 
-    public static void sameLineTextCenter(String text, char symbol, int length) {
+    public static String sameLineTextCenter(String text, char symbol, int length) {
         StringBuffer spacer = new StringBuffer();
         int numberChar = length - text.length();
         int leftLength = numberChar / 2;
@@ -25,7 +25,7 @@ public class Utility {
         for (int i = 0; i < rightLength; i++) {
             spacer.append(symbol);
         }
-        System.out.print(spacer.toString());
+        return spacer.toString();
     }
 
     public static void sameLineTextCenter(String text, char symbol) {
@@ -33,8 +33,7 @@ public class Utility {
     }
 
     public static void textCenter(String text, char symbol, int length) {
-        sameLineTextCenter(text, symbol, length);
-        System.out.println();
+        System.out.println(sameLineTextCenter(text, symbol, length));
     }
 
     public static void textCenter(String text, char symbol) {

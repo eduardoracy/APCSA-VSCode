@@ -31,13 +31,13 @@ public class Jeopardy {
     public JeopardyBoardCategory categorySelection() {
         Utility.clearScreen();
         board.getCurrentPlayer().printTurnHeader();
-        // board.printBoard();
+        board.printBoard();
 
         String categories = "";
         for (int i = 0; i < board.getCategories().size(); i++) {
             JeopardyBoardCategory category = board.getCategories().get(i);
             if (!category.allCategoryQuestionsAnswered())
-                System.out.format("%s. %s\n", i + 1, category.getCategory());
+                System.out.format("%s. %s\n", i + 1, category.getCategoryName());
             categories += String.format("%s", i + 1);
         }
 
@@ -55,13 +55,13 @@ public class Jeopardy {
 
     public void questionSelection(JeopardyBoardCategory category) {
         Utility.clearScreen();
-        Utility.printTurnHeader(board.getCurrentPlayer().getName(), category.getCategory());
-        // board.printBoard();
+        Utility.printTurnHeader(board.getCurrentPlayer().getName(), category.getCategoryName());
+        board.printBoard();
 
         System.out.println("Enter the question amount you would like to attempt: ");
         String input = console.next();
 
-        for (JeopardyQuestion question : category.getQuestion()) {
+        for (JeopardyQuestion question : category.getQuestions()) {
             int inputValue = Integer.parseInt(input);
             if (inputValue == question.getValue()) {
                 category.categoryQuestion(inputValue).askQuestion(board, category, console);
@@ -75,6 +75,7 @@ public class Jeopardy {
     }
 
     public void finalJeopardy() {
+        Utility.clearScreen();
         Utility.printTurnHeader("Final Jeopardy", "Instructions");
 
         Utility.textCenter("Players will take turns answering the Final Jeopardy Question", ' ');
@@ -108,12 +109,10 @@ public class Jeopardy {
             winner = player1.getName();
         } else if (player1.getPoints() < player2.getPoints()) {
             winner = player2.getName();
-        } else {
-
         }
 
         System.out.println();
-        if (!winner.equals("")) {
+        if (winner.isBlank()) {
             Utility.textCenter("Game has ended in a tie", ' ');
         } else {
             Utility.textCenter(winner + " is the winner!", ' ');
@@ -124,6 +123,7 @@ public class Jeopardy {
         Utility.textCenter(String.format("%s has ended with %s points", player1.getName(), player1.getPoints()), ' ');
         Utility.textCenter(String.format("%s has ended with %s points", player2.getName(), player2.getPoints()), ' ');
 
+        System.out.println();
         Utility.textCenter("Would you like to return to start screen?", ' ');
         if (console.next().equalsIgnoreCase("no")) {
             return false;
@@ -131,4 +131,5 @@ public class Jeopardy {
             return true;
         }
     }
+    
 }

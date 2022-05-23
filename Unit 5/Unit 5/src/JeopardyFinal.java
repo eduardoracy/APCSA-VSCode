@@ -52,7 +52,7 @@ public class JeopardyFinal {
         Utility.clearScreen();
         Utility.printTurnHeader("Final Jeopardy", player.getName());
 
-        System.out.println("You will have 30 seconds to read and answer the question");
+        Utility.textCenter("You will have 30 seconds to read and answer the question", ' ');
         Utility.enterToContinue(console);
 
         Utility.textCenter(question, ' ');

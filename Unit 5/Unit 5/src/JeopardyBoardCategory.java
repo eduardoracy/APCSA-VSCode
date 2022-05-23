@@ -12,7 +12,7 @@ public class JeopardyBoardCategory {
 
     }
 
-    public ArrayList<JeopardyQuestion> getQuestion() {
+    public ArrayList<JeopardyQuestion> getQuestions() {
         return questions;
     }
 
@@ -29,7 +29,7 @@ public class JeopardyBoardCategory {
         return questions.get((value / 200) - 1);
     }
 
-    public String getCategory() {
+    public String getCategoryName() {
         return category;
     }
 

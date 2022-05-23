@@ -9,16 +9,16 @@ public class JeopardyBoard {
         public JeopardyBoard(String player1, String player2) {
                 this.categories = createBoard();
                 this.player1 = new JeopardyPlayer(player1, 0, 1);
-                this.player2 =  new JeopardyPlayer(player2, 0, 2);
+                this.player2 = new JeopardyPlayer(player2, 0, 2);
                 currentPlayer = this.player1;
-                this.finalJeopardy = new  JeopardyFinal("(5 - 2) + 4 / 3 * 2 =", "5");
+                this.finalJeopardy = createFinal();
 
         }
 
         public boolean allQuestionsAnswered() {
                 for (JeopardyBoardCategory category : categories) {
                         if (!category.allCategoryQuestionsAnswered()) {
-                                return false;
+                                return true;
                         }
                 }
                 return true;
@@ -48,10 +48,99 @@ public class JeopardyBoard {
                 return finalJeopardy;
         }
 
+        public void printBoard() {
+                printPlayerInformation();
+                printCategoryInformation();
+                printQuestionsInformation();
+        }
 
+        public void printPlayerInformation() {
+                printRow(2, '╔', '═', '╦', '╗');
+
+                Utility.textCenter(String.format("║%s║%s║", Utility.sameLineTextCenter(player1.getName(), ' ', 12),
+                                Utility.sameLineTextCenter(player2.getName(), ' ', 12)), ' ');
+
+                Utility.textCenter(String.format("║%s║%s║",
+                                Utility.sameLineTextCenter(String.format("%s ", player1.getPoints()), ' ', 12),
+                                Utility.sameLineTextCenter(String.format("%s ", player2.getPoints()), ' ', 12)), ' ');
+
+                printRow(2, '╚', '═', '╩', '╝');
+
+        }
+
+        public void printCategoryInformation() {
+                printRow(6, '╔', '═', '╦', '╗');
+                for (int i = 0; i < 3; i++) {
+                        String print = "║";
+                        for (JeopardyBoardCategory category : categories) {
+                                print += String.format("%s║", Utility.sameLineTextCenter(
+                                                wordsPerRow(category.getCategoryName(), i), ' ', 12));
+                        }
+                        Utility.textCenter(print, ' ');
+                }
+                printRow(6, '╠', '═', '╬', '╣');
+
+        }
+
+        public void printQuestionsInformation() {
+                int numberOfQuestions = categories.get(0).getQuestions().size();
+                for (int i = 0; i < numberOfQuestions; i++) {
+                        String print = "║";
+                        for (JeopardyBoardCategory category : categories) {
+                                JeopardyQuestion question = category.getQuestions().get(i);
+                                String information = question.isAnswered() ? "X"
+                                                : String.format("%s", question.getValue());
+                                print += String.format("%s║", Utility.sameLineTextCenter(information, ' ', 12));
+                        }
+                        Utility.textCenter(print, ' ');
+                        if (i < numberOfQuestions - 1) {
+                                printRow(6, '╟', '─', '╫', '╢');
+                        } else {
+                                printRow(6, '╚', '═', '╩', '╝');
+                        }
+                }
+        }
+
+        public void printRow(int columns, char right, char filler, char intercept, char left) {
+                String print = String.format("%S", right);
+                for (int i = 0; i < columns; i++) {
+                        for (int j = 0; j < 12; j++) {
+                                print += filler;
+                        }
+                        if (i < columns - 1) {
+                                print += intercept;
+                        } else {
+                                print += left;
+                        }
+                }
+                Utility.textCenter(print, ' ');
+        }
+
+        public String wordsPerRow(String category, int row) {
+                row++;
+                String[] arr = separateWords(category);
+                int numberOfWords = arr.length;
+
+                if (numberOfWords == 1 && row == 2) {
+                        return category;
+                } else if (numberOfWords == 2) {
+                        if (row == 1) {
+                                return arr[0];
+                        } else if (row == 3) {
+                                return arr[1];
+                        }
+                } else if (numberOfWords == 3) {
+                        return arr[row - 1];
+                }
+                return " ";
+        }
+
+        public String[] separateWords(String category) {
+                return category.split(" ");
+        }
 
         public static ArrayList<JeopardyBoardCategory> createBoard() {
-                return new ArrayList<JeopardyBoardCategory>( Arrays.asList(
+                return new ArrayList<JeopardyBoardCategory>(Arrays.asList(
                                 new JeopardyBoardCategory("Variability",
                                                 new JeopardyQuestion(
                                                                 "Another name for a static variable",
@@ -59,19 +148,19 @@ public class JeopardyBoard {
                                                                 "What is a", 200),
                                                 new JeopardyQuestion(
                                                                 "A variable declared in body of a method",
-                                                                "local variable",
+                                                                "local",
                                                                 "What is a", 400),
                                                 new JeopardyQuestion(
                                                                 "A variable declared in the header of a method",
                                                                 "parameter",
-                                                                "What is a ", 600),
+                                                                "What is a", 600),
                                                 new JeopardyQuestion(
                                                                 "A variable declared in a class, not within a method",
-                                                                "instance variable",
+                                                                "instance",
                                                                 "What is a", 800),
                                                 new JeopardyQuestion(
                                                                 "Variable that belongs to a class, not to an object of a class",
-                                                                "static variable",
+                                                                "static",
                                                                 "What is a", 1000)),
 
                                 new JeopardyBoardCategory("Methodology",
@@ -81,15 +170,15 @@ public class JeopardyBoard {
                                                                 "What is", 200),
                                                 new JeopardyQuestion(
                                                                 "Method used to determine if two objects have the same content",
-                                                                ".equals()",
+                                                                "equals",
                                                                 "What is", 400),
                                                 new JeopardyQuestion(
                                                                 "Method used to get the length of a String",
-                                                                ".length()",
+                                                                "length",
                                                                 "What is", 600),
                                                 new JeopardyQuestion(
                                                                 "Method used to get the next input from a scanner",
-                                                                ".next()",
+                                                                "next",
                                                                 "What is", 800),
                                                 new JeopardyQuestion(
                                                                 "A class that has no mutator method can be described as",
@@ -111,7 +200,7 @@ public class JeopardyBoard {
                                                                 "What is", 600),
                                                 new JeopardyQuestion(
                                                                 "Method used to get a String representation of an object's state",
-                                                                ".toString()",
+                                                                "toString",
                                                                 "What is", 800),
                                                 new JeopardyQuestion(
                                                                 "Method used to extract a part of a String from the first position to the 4th position",
@@ -137,29 +226,29 @@ public class JeopardyBoard {
                                                                 "What is", 800),
                                                 new JeopardyQuestion(
                                                                 "Used in array lists to allow storage of a primitive data type",
-                                                                "wrapper class",
+                                                                "wrapper",
                                                                 "What is a", 1000)),
 
                                 new JeopardyBoardCategory("Loop Conditionals",
                                                 new JeopardyQuestion(
                                                                 "Loop that never ends, causing a run-time error",
-                                                                "infinite loop",
+                                                                "infinite",
                                                                 "What is a", 200),
                                                 new JeopardyQuestion(
                                                                 "Conditional loop with only known conditions",
-                                                                "while loop",
+                                                                "while",
                                                                 "What is a", 400),
                                                 new JeopardyQuestion(
                                                                 "Conditional loop with known parameters and increments/decrements",
-                                                                "for loop",
+                                                                "for",
                                                                 "What is a", 600),
                                                 new JeopardyQuestion(
                                                                 "Loop used when the body needs to be executed at least once regardless of conditions",
-                                                                "do-while loop",
+                                                                "do while",
                                                                 "What is", 800),
                                                 new JeopardyQuestion(
                                                                 "Local parameter, within a for loop, that is not required",
-                                                                "initialized variable",
+                                                                "initialized",
                                                                 "What is", 1000)),
 
                                 new JeopardyBoardCategory("Classy Arrays",
@@ -169,7 +258,7 @@ public class JeopardyBoard {
                                                                 "What is", 200),
                                                 new JeopardyQuestion(
                                                                 "A collection of 2D arrays",
-                                                                "3D array",
+                                                                "3D",
                                                                 "What is a", 400),
                                                 new JeopardyQuestion(
                                                                 "keyword used to create a restricted class that cannot be used to create objects",
@@ -186,8 +275,11 @@ public class JeopardyBoard {
 
                 ));
 
-                
                 // Final ASSUMING NUMBER ARE INTEGERS, USING JAVA MATH RULES, COMPUTE THE
                 // ANSWER: (5 - 2) + 4 / 3 * 2 = answer 5
+        }
+
+        public static JeopardyFinal createFinal() {
+                return new JeopardyFinal("(5 - 2) + 4 / 3 * 2 =", "5");
         }
 }

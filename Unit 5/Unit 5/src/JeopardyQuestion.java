@@ -17,7 +17,6 @@ class JeopardyQuestion {
 
     public int getValue() {
         return value;
-
     }
 
     public boolean isAnswered() {
@@ -36,13 +35,13 @@ class JeopardyQuestion {
             Utility.clearScreen();
 
             Utility.printTurnHeader(player.getName(), "Points:", player.getPoints());
-            System.out.format("%s for %s\n", category.getCategory(), value);
+            System.out.format("%s for %s\n", category.getCategoryName(), value);
             System.out.format("%s?\n", question);
             System.out.format("%s ", answerFormat);
             console.nextLine();
-            String response = console.nextLine();
+            String response = console.nextLine().toLowerCase();
 
-            if (response.equalsIgnoreCase(answer)) {
+            if (response.contains(answer)) {
                 answered = true;
                 player.incrementPoints(value);
                 Utility.textCenter("Correct Response!!", ' ');
@@ -63,6 +62,7 @@ class JeopardyQuestion {
                 }
             }
         }
-        Utility.enterToContinue(console);
+        Utility.textCenter("Press ENTER to continue...", ' ');
+        console.nextLine();
     }
 } 
