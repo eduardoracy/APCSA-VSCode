@@ -52,12 +52,19 @@ class JeopardyQuestion {
                 Utility.textCenter("Incorrect Response!!", ' ');
                 Utility.textCenter(String.format("%s now has %s points", player.getName(), player.getPoints()), ' ');
                 System.out.println();
+
                 board.changeCurrentPlayer();
                 player = board.getCurrentPlayer();
                 if (attempts == 1) {
                     Utility.textCenter(String.format("%s would you like to steal?", player.getName()), ' ');
-                    if (console.next().equalsIgnoreCase("no")) {
+                    String input = console.next();
+                    if (input.equalsIgnoreCase("no")) {
                         answered = true;
+                    } else if (input.equalsIgnoreCase("overwrite")) {
+                        board.changeCurrentPlayer();
+                        player = board.getCurrentPlayer();
+                        player.incrementPoints(value);
+                        attempts--;
                     }
                 }
             }

@@ -62,7 +62,7 @@ public class Utility {
 
     public static void printTurnHeader(String name, String secondLineTitle, int secondLineNumber) {
         Utility.textCenter(String.format(" %s ", name), '═');
-        Utility.textCenter(String.format(" %s %s ", secondLineTitle, secondLineNumber), '─');
+        Utility.textCenter(String.format(" %s%s ", secondLineTitle, secondLineNumber), '─');
         System.out.println();
     }
 

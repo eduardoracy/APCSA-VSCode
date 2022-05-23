@@ -18,7 +18,7 @@ public class JeopardyBoard {
         public boolean allQuestionsAnswered() {
                 for (JeopardyBoardCategory category : categories) {
                         if (!category.allCategoryQuestionsAnswered()) {
-                                return true;
+                                return false;
                         }
                 }
                 return true;
