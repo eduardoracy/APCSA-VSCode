@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Jeopardy {
     Scanner console = new Scanner(System.in);
-    String[] instructions = { "asdf" };
+    String[] instructions = { "If you believe your incorrect response to any of the questions is correct", "write \"overwrite\" when prompted if you would like to continue" };
     JeopardyBoardCategory[] categories = new JeopardyBoardCategory[5];
     JeopardyBoard board;
 
@@ -101,7 +101,7 @@ public class Jeopardy {
         Utility.textCenter(" Java Jeopardy ", '═');
         Utility.textCenter(" Game Over ", '─');
 
-        String winner = "";
+        String winner = null;
         JeopardyPlayer player1 = board.getPlayer(1);
         JeopardyPlayer player2 = board.getPlayer(2);
         
@@ -112,7 +112,7 @@ public class Jeopardy {
         }
 
         System.out.println();
-        if (winner.isBlank()) {
+        if (winner == null) {
             Utility.textCenter("Game has ended in a tie", ' ');
         } else {
             Utility.textCenter(winner + " is the winner!", ' ');

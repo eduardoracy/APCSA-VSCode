@@ -6,6 +6,7 @@ class JeopardyQuestion {
     private int value;
     private boolean answered;
     private String answerFormat;
+    private boolean isDailyDouble;
 
     public JeopardyQuestion(String question, String answer, String answerFormat, int value) {
         this.question = question;
@@ -25,23 +26,34 @@ class JeopardyQuestion {
 
     public void dailyDouble() {
         value *= 2;
+        isDailyDouble = true;
     }
 
     public void askQuestion(JeopardyBoard board, JeopardyBoardCategory category, Scanner console) {
+        askQuestion(board, category, console, 0, false);
+    }
+
+    public void askQuestion(JeopardyBoard board, JeopardyBoardCategory category, Scanner console, int attempts,
+            boolean overwritten) {
         JeopardyPlayer player = board.getCurrentPlayer();
-        int attempts = 0;
         while (!answered && attempts < 2) {
             attempts++;
             Utility.clearScreen();
 
             Utility.printTurnHeader(player.getName(), "Points:", player.getPoints());
+            if (isDailyDouble) {
+                Utility.textCenter("Daily Double!!", ' ');
+            }
+            String response = "";
+            if (!overwritten) {
             System.out.format("%s for %s\n", category.getCategoryName(), value);
             System.out.format("%s?\n", question);
             System.out.format("%s ", answerFormat);
             console.nextLine();
-            String response = console.nextLine().toLowerCase();
+            response = console.nextLine().toLowerCase();
+            }
 
-            if (response.contains(answer)) {
+            if (response.contains(answer) || overwritten) {
                 answered = true;
                 player.incrementPoints(value);
                 Utility.textCenter("Correct Response!!", ' ');
@@ -63,13 +75,22 @@ class JeopardyQuestion {
                     } else if (input.equalsIgnoreCase("overwrite")) {
                         board.changeCurrentPlayer();
                         player = board.getCurrentPlayer();
-                        player.incrementPoints(value * 2);
-                        answered = true;
+                        player.incrementPoints(value);
+                        askQuestion(board, category, console, 1, true);
+                        return;
                     }
                 }
             }
         }
         Utility.textCenter("Press ENTER to continue...", ' ');
+        if (!overwritten && console.next().equalsIgnoreCase("overwrite")) {
+            board.changeCurrentPlayer();
+            player = board.getCurrentPlayer();
+            player.incrementPoints(value);
+            askQuestion(board, category, console, 1, true);
+            return;
+        }
+        console.nextLine();
         console.nextLine();
     }
-} 
+}
