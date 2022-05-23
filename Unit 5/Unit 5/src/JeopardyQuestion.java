@@ -63,8 +63,8 @@ class JeopardyQuestion {
                     } else if (input.equalsIgnoreCase("overwrite")) {
                         board.changeCurrentPlayer();
                         player = board.getCurrentPlayer();
-                        player.incrementPoints(value);
-                        attempts--;
+                        player.incrementPoints(value * 2);
+                        answered = true;
                     }
                 }
             }
