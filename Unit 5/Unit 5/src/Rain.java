@@ -9,6 +9,7 @@ public class Rain {
             BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\racyedu000\\Desktop\\FileReader\\Rain.dat.txt"));
             String lineReader;
             try {
+                reader.readLine();
                 while ((lineReader = reader.readLine()) != null) {
                     String[] line = lineReader.split(" ");
                     int[] height = new int[line.length];
@@ -30,6 +31,7 @@ public class Rain {
                     }
                     System.out.println(rain);
                 }
+                reader.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

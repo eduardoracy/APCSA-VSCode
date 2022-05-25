@@ -34,25 +34,24 @@ class JeopardyQuestion {
     }
 
     public void askQuestion(JeopardyBoard board, JeopardyBoardCategory category, Scanner console, int attempts,
-            boolean overwritten) {
+        boolean overwritten) {
         JeopardyPlayer player = board.getCurrentPlayer();
         while (!answered && attempts < 2) {
             attempts++;
             Utility.clearScreen();
-
             Utility.printTurnHeader(player.getName(), "Points:", player.getPoints());
+
             if (isDailyDouble) {
                 Utility.textCenter("Daily Double!!", ' ');
             }
-            String response = "";
             if (!overwritten) {
-            System.out.format("%s for %s\n", category.getCategoryName(), value);
-            System.out.format("%s?\n", question);
-            System.out.format("%s ", answerFormat);
-            console.nextLine();
-            response = console.nextLine().toLowerCase();
+                System.out.format("%s for %s\n", category.getCategoryName(), value);
+                System.out.format("%s?\n", question);
+                System.out.format("%s ", answerFormat);
+                console.nextLine();
             }
-
+            
+            String response =  console.nextLine().toLowerCase();
             if (response.contains(answer) || overwritten) {
                 answered = true;
                 player.incrementPoints(value);
@@ -79,18 +78,18 @@ class JeopardyQuestion {
                         askQuestion(board, category, console, 1, true);
                         return;
                     }
+                } else {
+
                 }
             }
         }
         Utility.textCenter("Press ENTER to continue...", ' ');
-        if (!overwritten && console.next().equalsIgnoreCase("overwrite")) {
+        if (!overwritten && attempts == 2 && console.nextLine().equalsIgnoreCase("overwrite")) {
             board.changeCurrentPlayer();
             player = board.getCurrentPlayer();
             player.incrementPoints(value);
             askQuestion(board, category, console, 1, true);
             return;
-        }
-        console.nextLine();
-        console.nextLine();
+        } 
     }
 }

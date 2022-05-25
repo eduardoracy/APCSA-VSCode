@@ -12,7 +12,7 @@ public class JeopardyBoard {
                 this.player2 = new JeopardyPlayer(player2, 0, 2);
                 currentPlayer = this.player1;
                 this.finalJeopardy = createFinal();
-
+                setDailyDouble();
         }
 
         public boolean allQuestionsAnswered() {
@@ -22,6 +22,12 @@ public class JeopardyBoard {
                         }
                 }
                 return true;
+        }
+
+        public void setDailyDouble() {
+                categories.get((int) (Math.random() * 6) + 1).getQuestions().get((int) (Math.random() * 6) + 1)
+                                .dailyDouble();
+                ;
         }
 
         public ArrayList<JeopardyBoardCategory> getCategories() {
