@@ -25,7 +25,7 @@ public class JeopardyBoard {
         }
 
         public void setDailyDouble() {
-                categories.get((int) (Math.random() * 6) + 1).getQuestions().get((int) (Math.random() * 6) + 1)
+                categories.get((int) (Math.random() * 6)).getQuestions().get((int) (Math.random() * 6))
                                 .dailyDouble();
                 ;
         }

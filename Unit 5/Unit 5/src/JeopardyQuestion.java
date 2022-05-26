@@ -89,7 +89,9 @@ class JeopardyQuestion {
             player = board.getCurrentPlayer();
             player.incrementPoints(value);
             askQuestion(board, category, console, 1, true);
-            return;
-        } 
+        } else if (console.nextLine().equalsIgnoreCase("overwrite")) {
+            askQuestion(board, category, console, 1, true);
+        }
+        answered = true;
     }
 }
