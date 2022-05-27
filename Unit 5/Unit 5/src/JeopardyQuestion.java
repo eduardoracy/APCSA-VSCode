@@ -25,7 +25,7 @@ class JeopardyQuestion {
     }
 
     public void dailyDouble() {
-        value *= 2;
+        value >>= 1;
         isDailyDouble = true;
     }
 
