@@ -18,14 +18,14 @@ public class JeopardyBoard {
         public boolean allQuestionsAnswered() {
                 for (JeopardyBoardCategory category : categories) {
                         if (!category.allCategoryQuestionsAnswered()) {
-                                return false;
+                                return true;
                         }
                 }
                 return true;
         }
 
         public void setDailyDouble() {
-                categories.get((int) (Math.random() * 6)).getQuestions().get((int) (Math.random() * 6))
+                categories.get((int) (Math.random() * 5)).getQuestions().get((int) (Math.random() * 5))
                                 .dailyDouble();
                 ;
         }
