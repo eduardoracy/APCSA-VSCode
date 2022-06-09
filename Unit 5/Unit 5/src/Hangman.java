@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 
 public class Hangman {
     public static void main(String[] args) {
@@ -17,55 +17,85 @@ public class Hangman {
         Utility.textCenter("Thank you for playing", ' ');
     }
 
-    public int logic() {
+    public boolean logic() {
         Utility.clearScreen();
 
-        String secretPhrase = phraseInputSelection();
-        char[][] secretArr = new char[2][secretPhrase.length()];
-        secretArr[0] = secretPhrase.toCharArray();
-        int turnCounter = 1, incorrectGuesses = 0;
-
-        while (true) {
-            incorrectGuesses = playerTurn(secretArr, turnCounter++, incorrectGuesses);
-            if (secretArr[0].equals(secretArr[1]) || turnCounter > 5) {
-                break;
-            }
+        ArrayList<ArrayList<Character>> arr = createArrayList(phraseInputSelection());
+        int turnCounter = 1;
+        while (!checkEquals(arr) || arr.get(2).size() < 7 || !arr.get(2).contains('!')) {
+            playerTurn(arr, turnCounter++);
+            for (char letter : arr.get(0));
         }
-        return turnCounter;
+        return arr.get(2).size() < 7 && !arr.get(2).contains('!');
     }
 
-    public int playerTurn(char[][] secret, int turnCounter, int incorrectGuesses) {
+    public void playerTurn(ArrayList<ArrayList<Character>> arr, int turnCounter) {
         Utility.clearScreen();
         Utility.printTurnHeader(String.format("Turn: %s", turnCounter), "Player");
 
-        printBoard(secret, incorrectGuesses);
+        printBoard(arr);
 
-        System.out.println("Enter a guess for a letter: ");
-
-        return boardMarker(secret, console.next().charAt(0)) ? incorrectGuesses : incorrectGuesses++;
-    }
-
-    public boolean boardMarker(char[][] secret, char guess) {
-        boolean marked = false;
-        for (int i = 0; i < secret.length; i++) {
-            if (secret[0][i] == guess) {
-                secret[1][i] = guess;
-                marked = true;
-            }
+        System.out.println("1. Guess a letter");
+        System.out.println("2. Solve the phrase");
+        int input = 0;
+        try {
+            input = console.nextInt();
+        } catch (InputMismatchException e) {
         }
-        return marked;
+        Utility.clearScreen();
+        Utility.printTurnHeader("Hangman", "Guessing");
+
+        printBoard(arr);
+
+        if (input == 1) {
+            System.out.println("Enter a guess for a letter: ");
+            boardMarker(arr, console.next().charAt(0), turnCounter);
+        } else if (input == 2) {
+            System.out.println("Enter a guess for the phrase: ");
+            console.nextLine();
+            for (char letter : console.nextLine().trim().toCharArray()) {
+                if (!arr.get(0).contains(letter)) {
+                    arr.get(2).add('!');
+                    break;
+                }
+            }
+        } else {
+            Utility.textCenter("Invalid selection, Press ENTER to try again...", ' ');
+            console.nextLine();
+            playerTurn(arr, turnCounter);
+        }
     }
 
-    public void printBoard(char[][] secret, int incorrectGuesses) {
-        System.out.printf("Incorrect Guesses: %s\n", incorrectGuesses);
-
-        printSecretWordGuesses(secret);
+    public void boardMarker(ArrayList<ArrayList<Character>> arr, char guess, int turnCounter) {
+        if (!arr.get(2).contains(guess) && !Character.isDigit(guess)) {
+            for (int i = 0; i < arr.get(0).size(); i++) {
+                if (arr.get(0).get(i) == guess) {
+                    arr.get(1).set(i, guess);
+                }
+            }
+            arr.get(2).add(guess);
+        } else {
+            System.out.println("You've already guessed this letter or the selection type  is invalid,");
+            System.out.print("Press ENTER to try again...");
+            console.nextLine();
+            playerTurn(arr, turnCounter);
+            return;
+        }
     }
 
-    public void printSecretWordGuesses(char[][] secret) {
-        StringBuilder sb = new StringBuilder();
-        for (char letter : secret[1]) {
-            System.out.print(sb.underline(String.format("%s", letter)) + " ");
+    public void printBoard(ArrayList<ArrayList<Character>> arr) {
+        printSecretWordGuesses(arr);
+    }
+
+    public void printSecretWordGuesses(ArrayList<ArrayList<Character>> arr) {
+        System.out.print("Previous Guesses: ");
+        for (char letter : arr.get(2)) {
+            System.out.printf("%s ", letter);
+        }
+
+        System.out.println();
+        for (char letter : arr.get(1)) {
+            System.out.print(new StringBuilder().underline(Character.toString(letter)) + " ");
         }
         System.out.println();
     }
@@ -77,11 +107,11 @@ public class Hangman {
         return console.nextLine().trim();
     }
 
-    public boolean endScreen(int turnCounter) {
+    public boolean endScreen(boolean won) {
         Utility.printTurnHeader("Hangman", "Game Over");
         System.out.println();
 
-        String status = turnCounter > 5 ? "You lost..." : "Congratulations, you've won";
+        String status = won ? "Congratulations, you've won" : "You lost...";
         Utility.textCenter(status, ' ');
 
         Utility.textCenter("Would you like to return to start screen?", ' ');
@@ -90,5 +120,26 @@ public class Hangman {
         } else {
             return true;
         }
+    }
+
+    public boolean checkEquals(ArrayList<ArrayList<Character>> arr) {
+        for (int i = 0; i < arr.get(0).size(); i++) {
+            if (arr.get(0).get(i) != arr.get(1).get(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public ArrayList<ArrayList<Character>> createArrayList(String secretPhrase) {
+        ArrayList<ArrayList<Character>> arr = new ArrayList<>(3);
+        for (int i = 0; i < 3; i++) {
+            arr.add(new ArrayList<>());
+        }
+        for (char letter : secretPhrase.toCharArray()) {
+            arr.get(0).add(letter);
+            arr.get(1).add(' ');
+        }
+        return arr;
     }
 }
