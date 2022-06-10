@@ -1,9 +1,8 @@
 import java.util.*;
 
+import javax.swing.text.DefaultCaret;
+
 public class Hangman {
-    public static void main(String[] args) {
-        new Hangman().startGame();
-    }
 
     Scanner console = new Scanner(System.in);
 
@@ -22,9 +21,8 @@ public class Hangman {
 
         ArrayList<ArrayList<Character>> arr = createArrayList(phraseInputSelection());
         int turnCounter = 1;
-        while (!checkEquals(arr) || arr.get(2).size() < 7 || !arr.get(2).contains('!')) {
+        while (!checkEquals(arr) && arr.get(2).size() < 7 && !arr.get(2).contains('!')) {
             playerTurn(arr, turnCounter++);
-            for (char letter : arr.get(0));
         }
         return arr.get(2).size() < 7 && !arr.get(2).contains('!');
     }
@@ -49,7 +47,7 @@ public class Hangman {
 
         if (input == 1) {
             System.out.println("Enter a guess for a letter: ");
-            boardMarker(arr, console.next().charAt(0), turnCounter);
+            boardMarker(arr, Character.toLowerCase(console.next().charAt(0)), turnCounter);
         } else if (input == 2) {
             System.out.println("Enter a guess for the phrase: ");
             console.nextLine();
@@ -79,11 +77,61 @@ public class Hangman {
             System.out.print("Press ENTER to try again...");
             console.nextLine();
             playerTurn(arr, turnCounter);
-            return;
         }
     }
 
     public void printBoard(ArrayList<ArrayList<Character>> arr) {
+        Top();
+        switch (arr.get(2).size()) {
+
+            case 0:
+                Middle1();
+                break;
+
+            case 1:
+                Head();
+                Middle2();
+                break;
+
+            case 2:
+                Head();
+                Body();
+                Middle3();
+                break;
+
+            case 3:
+                Head();
+                Arms1();
+                Middle4();
+                break;
+
+            case 4:
+                Head();
+                Arms2();
+                Middle4();
+                break;
+
+            case 5:
+                Head();
+                Arms2();
+                Legs1();
+                Middle4();
+                System.out.println("Game over :(");
+                break;
+
+            case 6:
+                Head();
+                Arms2();
+                Legs2();
+                Middle4();
+                System.out.println("Game over :(");
+                break;
+
+            default:
+                System.out.println("ERROR");
+                break;
+        }
+        Bottom();
         printSecretWordGuesses(arr);
     }
 
@@ -92,7 +140,6 @@ public class Hangman {
         for (char letter : arr.get(2)) {
             System.out.printf("%s ", letter);
         }
-
         System.out.println();
         for (char letter : arr.get(1)) {
             System.out.print(new StringBuilder().underline(Character.toString(letter)) + " ");
@@ -101,13 +148,17 @@ public class Hangman {
     }
 
     public String phraseInputSelection() {
-        Utility.printTurnHeader("Secret Phrase Selection", "Game Master");
-        Utility.textCenter("Game Master please input secret phrase for player to guess", ' ');
-        console.nextLine();
-        return console.nextLine().trim();
+        // Utility.printTurnHeader("Secret Phrase Selection", "Game Master");
+        // Utility.textCenter("Game Master please input secret phrase for player to
+        // guess", ' ');
+        // console.nextLine();
+        // return console.nextLine().trim();
+        String[] arr = { "umpire", "ball", "babolat", "net", "deuce", "advantage", "wilson", "game", "set", "match" };
+        return arr[(int) (Math.random() * 5)];
     }
 
     public boolean endScreen(boolean won) {
+        Utility.clearScreen();
         Utility.printTurnHeader("Hangman", "Game Over");
         System.out.println();
 
@@ -142,4 +193,112 @@ public class Hangman {
         }
         return arr;
     }
+
+    public void Top() {
+        System.out.print("""
+                _______________
+                | |  //       |
+                    """);
+    }
+
+    public void Middle1() {
+        System.out.print("""
+                | | //
+                | |//
+                | |/
+                | |
+                | |
+                | |
+                | |
+                | |
+                | |
+                | |
+                | |
+                    """);
+    }
+
+    public void Middle2() {
+        System.out.print("""
+                | |
+                | |
+                | |
+                | |
+                | |
+                | |
+                | |
+                | |
+                    """);
+    }
+
+    public void Middle3() {
+        System.out.print("""
+                | |
+                | |
+                | |
+                | |
+                | |
+                    """);
+    }
+
+    public void Middle4() {
+        System.out.print("""
+                | |
+                | |
+                | |
+                    """);
+    }
+
+    public void Bottom() {
+        System.out.print("""
+                _______________
+                |_____________|
+                    """);
+    }
+
+    public void Head() {
+        System.out.print("""
+                | | //       _|_
+                | |//       /x x\\
+                | |/        \\_-_/
+                    """);
+    }
+
+    public void Body() {
+        System.out.print("""
+                | |           |
+                | |           |
+                | |           |
+                    """);
+    }
+
+    public void Arms1() {
+        System.out.print("""
+                | |           |
+                | |          /|
+                | |         / |
+                    """);
+    }
+
+    public void Arms2() {
+        System.out.print("""
+                | |           |
+                | |          /|\\
+                | |         / | \\
+                    """);
+    }
+
+    public void Legs1() {
+        System.out.print("""
+                | |          /
+                | |          /
+                    """);
+    }
+
+    public void Legs2() {
+        System.out.print("""
+                | |          / \\
+                | |          / \\
+                    """);
+    }
+
 }
