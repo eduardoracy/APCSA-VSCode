@@ -1,6 +1,7 @@
 public class scratchpad {
         public static void main(String[] args) {
-                new Hangman().startGame();
+                Hangman hangman = new Hangman();
+                hangman.startGame();
         }
         
 }

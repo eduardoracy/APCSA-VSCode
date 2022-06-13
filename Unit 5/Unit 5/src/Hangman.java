@@ -1,7 +1,5 @@
 import java.util.*;
 
-import javax.swing.text.DefaultCaret;
-
 public class Hangman {
 
     Scanner console = new Scanner(System.in);
@@ -19,12 +17,15 @@ public class Hangman {
     public boolean logic() {
         Utility.clearScreen();
 
-        ArrayList<ArrayList<Character>> arr = createArrayList(phraseInputSelection());
+        ArrayList<ArrayList<Character>> arr = createArrayList("cat");
         int turnCounter = 1;
-        while (!checkEquals(arr) && arr.get(2).size() < 7 && !arr.get(2).contains('!')) {
+        while (!checkEquals(arr) && arr.get(2).size() < 6 && !arr.get(2).contains('!')) {
             playerTurn(arr, turnCounter++);
         }
-        return arr.get(2).size() < 7 && !arr.get(2).contains('!');
+        System.out.println("Game has ended, press ENTER to continue to end screen...");
+        console.nextLine();
+        console.nextLine();
+        return arr.get(2).size() < 6 && !arr.get(2).contains('!');
     }
 
     public void playerTurn(ArrayList<ArrayList<Character>> arr, int turnCounter) {
@@ -65,74 +66,22 @@ public class Hangman {
     }
 
     public void boardMarker(ArrayList<ArrayList<Character>> arr, char guess, int turnCounter) {
-        if (!arr.get(2).contains(guess) && !Character.isDigit(guess)) {
+        if (!arr.get(2).contains(guess) && !arr.get(1).contains(guess) && !Character.isDigit(guess)) {
             for (int i = 0; i < arr.get(0).size(); i++) {
                 if (arr.get(0).get(i) == guess) {
                     arr.get(1).set(i, guess);
                 }
             }
+            if (!arr.get(0).contains(guess)) {
             arr.get(2).add(guess);
+            }
         } else {
             System.out.println("You've already guessed this letter or the selection type  is invalid,");
             System.out.print("Press ENTER to try again...");
             console.nextLine();
+            console.nextLine();
             playerTurn(arr, turnCounter);
         }
-    }
-
-    public void printBoard(ArrayList<ArrayList<Character>> arr) {
-        Top();
-        switch (arr.get(2).size()) {
-
-            case 0:
-                Middle1();
-                break;
-
-            case 1:
-                Head();
-                Middle2();
-                break;
-
-            case 2:
-                Head();
-                Body();
-                Middle3();
-                break;
-
-            case 3:
-                Head();
-                Arms1();
-                Middle4();
-                break;
-
-            case 4:
-                Head();
-                Arms2();
-                Middle4();
-                break;
-
-            case 5:
-                Head();
-                Arms2();
-                Legs1();
-                Middle4();
-                System.out.println("Game over :(");
-                break;
-
-            case 6:
-                Head();
-                Arms2();
-                Legs2();
-                Middle4();
-                System.out.println("Game over :(");
-                break;
-
-            default:
-                System.out.println("ERROR");
-                break;
-        }
-        Bottom();
-        printSecretWordGuesses(arr);
     }
 
     public void printSecretWordGuesses(ArrayList<ArrayList<Character>> arr) {
@@ -192,6 +141,60 @@ public class Hangman {
             arr.get(1).add(' ');
         }
         return arr;
+    }
+
+    public void printBoard(ArrayList<ArrayList<Character>> arr) {
+        Top();
+        switch (arr.get(2).size()) {
+
+            case 0:
+                Middle1();
+                break;
+
+            case 1:
+                Head();
+                Middle2();
+                break;
+
+            case 2:
+                Head();
+                Body();
+                Middle3();
+                break;
+
+            case 3:
+                Head();
+                Arms1();
+                Middle4();
+                break;
+
+            case 4:
+                Head();
+                Arms2();
+                Middle4();
+                break;
+
+            case 5:
+                Head();
+                Arms2();
+                Legs1();
+                Middle4();
+                break;
+
+            case 6:
+                Head();
+                Arms2();
+                Legs2();
+                Middle4();
+                System.out.println("Game over...");
+                break;
+
+            default:
+                System.out.println("ERROR");
+                break;
+        }
+        Bottom();
+        printSecretWordGuesses(arr);
     }
 
     public void Top() {
@@ -290,14 +293,14 @@ public class Hangman {
     public void Legs1() {
         System.out.print("""
                 | |          /
-                | |          /
+                | |         /
                     """);
     }
 
     public void Legs2() {
         System.out.print("""
                 | |          / \\
-                | |          / \\
+                | |         /   \\
                     """);
     }
 
